@@ -352,7 +352,7 @@ export class World {
         const by = ty * T;
         if (this.x + w + 1 <= bx || this.x - 1 >= bx + T || this.y + h + 1 <= by || this.y - 1 >= by + T) continue;
         this.blockState[idx] = 1;
-        this.blockBounce[idx] = 0.12;
+        this.blockBounce[idx] = GAMEPLAY.blockBounce;
         this.spawnSparkles(bx + T / 2, by + T / 2);
         this.emit("question", idx);
         return;
@@ -371,7 +371,7 @@ export class World {
         this.emit("complete", 0);
       }
     } else if (this.exitHintCooldown <= 0) {
-      this.exitHintCooldown = 1.6;
+      this.exitHintCooldown = GAMEPLAY.exitHintCooldown;
       this.emit("exitBlocked", this.total - this.answered);
     }
   }

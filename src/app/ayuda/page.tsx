@@ -51,6 +51,48 @@ export default function Ayuda() {
         muestra todas las secciones.
       </p>
 
+      <SectionHeader title="Modo aventura" />
+      <div className="table-wrap" tabIndex={0} role="region" aria-label="Tabla (desplázala si no cabe)">
+        <table className="data-table">
+          <thead>
+            <tr>
+              <th scope="col">Tecla</th>
+              <th scope="col">Qué hace</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <kbd>←</kbd> <kbd>→</kbd> o <kbd>A</kbd> <kbd>D</kbd>
+              </td>
+              <td>Mover a Sprout</td>
+            </tr>
+            <tr>
+              <td>
+                <kbd>Espacio</kbd>, <kbd>↑</kbd> o <kbd>W</kbd>
+              </td>
+              <td>Saltar (mantén para saltar más alto)</td>
+            </tr>
+            <tr>
+              <td>
+                <kbd>Esc</kbd> o <kbd>P</kbd>
+              </td>
+              <td>Pausa: continuar, salir al escritorio, modo clásico o sonido</td>
+            </tr>
+            <tr>
+              <td>
+                <kbd>M</kbd>
+              </td>
+              <td>Activar o silenciar la música y los efectos</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p className="text-dim text-small">
+        Toca un «?» para responder. En celular aparecen botones de mover y saltar. Si prefieres responder sin
+        plataformas, usa el Modo clásico desde Unidades o desde la pausa.
+      </p>
+
       <SectionHeader title="Sonido, movimiento y pantalla" />
       <p className="text-dim text-small">
         También tienes estos ajustes a la mano: el sonido en la barra de tareas; la vista, el modo simple y el

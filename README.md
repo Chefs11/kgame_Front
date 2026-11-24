@@ -24,6 +24,10 @@ npm run dev        # http://localhost:3001
 | `npm run build` | Compilación de producción |
 | `npm run start` | Sirve la compilación (puerto 3001) |
 | `npm run lint` | ESLint |
+| `npm run typecheck` | TypeScript |
+| `npm test` | Pruebas unitarias (Vitest) |
+| `npm run e2e` | Pruebas e2e (Playwright) |
+| `npm run assets:adventure` | Regenera el arte del Modo aventura |
 
 No necesita variables de entorno. `.env.example` y `src/lib/socket.ts` son del arranque original del
 proyecto y **no se usan** en esta versión.
@@ -87,6 +91,42 @@ El juego se muestra sobre el vidrio de una **foto real** de un monitor CRT en un
 - **Efectos reducidos** (panel izquierdo o `prefers-reduced-motion`): sin zoom de entrada, y los encendidos son fundidos cortos. **Modo simple** quita las capas de vidrio.
 - **Teléfono (< 768 px):** el vidrio mediría ~370 × 260 px, así que se oculta la foto y el juego
   ocupa toda la pantalla.
+
+## Modo aventura
+
+Al pulsar **Jugar**, Sprout recorre un bosque de plataformas por unidad y responde un reto al tocar
+cada «?». Sea correcta o no la respuesta, vuelve al juego. Cuando no quedan «?», se abre el tronco
+hueco (la salida). El **Modo clásico** (`/jugar`) sigue igual y es la alternativa accesible:
+se elige en **Unidades** o desde el menú de pausa.
+
+| Pieza | Archivo |
+|---|---|
+| Motor (TS puro, sin React) | `src/game/adventure/` (`world.ts`, `engine.ts`, `render.ts`, `input.ts`, `audio.ts`) |
+| Configuración de física, cámara y audio | `src/game/adventure/config.ts` |
+| Niveles (texto editable, uno por unidad) | `src/game/adventure/levels/unidad-N.ts` (leyenda en `level.ts`) |
+| Validador de niveles | `src/game/adventure/validate.ts` (se ejecuta en `npm test`) |
+| UI (canvas, HUD, pregunta, pausa, resumen, táctil) | `src/components/adventure/AdventureGame.tsx` |
+| Vista de pregunta compartida con el clásico | `src/components/game/QuestionView.tsx` |
+
+- **Arte:** `npm run assets:adventure` regenera `public/adventure/*.png` y el manifiesto desde
+  `src/game/adventure/assets/source/` (hoja de Sprout y escena del bosque). Si se reemplazan las
+  imágenes, solo se vuelve a correr el script.
+- **Puntaje y progreso:** cada «?» saca una pregunta sin repetir del mismo pool que el clásico
+  (duración por defecto: 8, o las disponibles de la unidad). El «?» azul vale el doble solo en su
+  propio registro. El resultado final se guarda en el progreso con `variant: "aventura"`; los
+  bloques respondidos se guardan en `localStorage` (`kgame.adventure.v1`).
+- **Audio:** sintetizado con Web Audio (música original a 112 BPM en pentatónica mayor y efectos).
+  Comparte el estado de silencio con la bocina de la barra de tareas y empieza apagado. Para usar un
+  archivo, cambia `MUSIC_SOURCE` en `config.ts` y coloca la pista en `public/audio/`.
+- **Controles:** ← → / A D mover · Espacio / ↑ / W saltar · ↓ / S agachar · Esc o P pausa ·
+  M silencio. En pantallas táctiles aparecen un D-pad y un botón de salto.
+
+### Pruebas
+
+```bash
+npm test        # Vitest: física, coyote/buffer, ?, bloques usados, salida, validador, guardado
+npm run e2e     # Playwright con el Chrome instalado (levanta next dev en el puerto 3101)
+```
 
 ## Sistema de diseño
 

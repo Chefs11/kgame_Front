@@ -37,7 +37,14 @@ Alternativas locales si no cargan: `Courier New` / `monospace` y `ui-monospace`,
   - Nota: el art. 12 de la Ley Federal del Derecho de Autor define al autor como «la persona física
     que ha creado una obra»; si una imagen generada por IA tiene o no protección por derecho de autor
     es una cuestión que el equipo docente debe revisar. Se declara aquí por transparencia.
-- **Sonidos:** tonos generados en el navegador con Web Audio; no hay archivos de audio.
+- **Personaje «Sprout» y escena del bosque (Modo aventura):** imágenes **generadas con inteligencia
+  artificial (Google Gemini)** a petición del equipo (`src/game/adventure/assets/source/`). Los
+  sprites, tiles y fondo de `public/adventure/` se derivan de ellas con
+  `scripts/build-adventure-assets.ts`; la salida (tronco) se dibuja por código. No se usan sprites,
+  nombres ni música de otros juegos. Mismas condiciones y nota sobre derecho de autor que la foto
+  del monitor.
+- **Sonidos y música:** generados en el navegador con Web Audio; la melodía del Modo aventura es
+  original y no hay archivos de audio.
 
 ## Diseño de referencia
 - La dirección visual (monitor CRT beige en un cuarto con luz cálida, escritorio ámbar con iconos

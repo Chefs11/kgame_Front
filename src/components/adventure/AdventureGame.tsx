@@ -305,6 +305,11 @@ export function AdventureGame({ unitId }: { unitId: UnitId }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [unitId]);
 
+  // La preferencia de movimiento puede resolverse después de crear el motor (hidratación)
+  useEffect(() => {
+    engineRef.current?.setReducedMotion(reducedMotion);
+  }, [reducedMotion, status]);
+
   // En pausa, Esc o P continúan (el motor no recibe teclas mientras está en pausa)
   useEffect(() => {
     if (status !== "paused") return;

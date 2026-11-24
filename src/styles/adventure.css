@@ -278,3 +278,48 @@
     bottom: 18px;
   }
 }
+
+/* ---------- Transiciones (cortas; con movimiento reducido se vuelven instantáneas) ---------- */
+.adventure__overlay {
+  animation: adv-fade 160ms ease-out both;
+}
+.adventure__panel {
+  animation: adv-rise 180ms cubic-bezier(0.2, 0.7, 0.3, 1) both;
+}
+.adventure__banner {
+  animation: adv-banner var(--banner-ms, 1200ms) ease-in-out both;
+}
+.adventure__toast {
+  animation: adv-fade 140ms ease-out both;
+}
+@keyframes adv-fade {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes adv-rise {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+@keyframes adv-banner {
+  0% {
+    opacity: 0;
+  }
+  15%,
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+.adventure[data-reduced="true"] .adventure__overlay,
+.adventure[data-reduced="true"] .adventure__panel,
+.adventure[data-reduced="true"] .adventure__toast {
+  animation-duration: 1ms;
+}
+.adventure[data-reduced="true"] .adventure__banner {
+  animation: none;
+}

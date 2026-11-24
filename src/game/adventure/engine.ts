@@ -97,6 +97,13 @@ export class AdventureEngine {
     return this.holds.size > 0 || document.hidden;
   }
 
+  /** prefers-reduced-motion o «Efectos reducidos»: sin parallax, destellos ni cámara suavizada. */
+  setReducedMotion(on: boolean): void {
+    this.world.reducedMotion = on;
+    this.renderer.reducedMotion = on;
+    if (on) for (let i = 0; i < this.world.plife.length; i++) this.world.plife[i] = 0;
+  }
+
   setVirtual(key: VirtualKey, down: boolean): void {
     this.input.setVirtual(key, down);
   }
