@@ -1,0 +1,191 @@
+/* ==========================================================
+ * Pantallas del juego
+ * ========================================================== */
+
+.game-hud {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 14px 20px;
+  align-items: end;
+  margin-bottom: 26px;
+}
+.game-hud__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  grid-column: 1 / -1;
+}
+.game-hud__stats {
+  display: flex;
+  gap: 10px;
+  align-items: stretch;
+}
+
+.challenge-title {
+  margin: 0 0 6px;
+  font-family: var(--font-display);
+  font-size: 2.75rem;
+  font-weight: 400;
+  line-height: 0.95;
+  color: var(--color-phosphor);
+  text-shadow: var(--glow-display);
+}
+.challenge-topic {
+  margin: 0 0 18px;
+  font-size: var(--text-ui);
+  color: var(--color-phosphor-dim);
+}
+.challenge-context {
+  margin: 0 0 18px;
+  padding: 14px 18px;
+  border: var(--border-dim);
+  border-left: 4px solid var(--color-phosphor);
+  max-width: 72ch;
+}
+.challenge-context__label {
+  display: block;
+  margin-bottom: 4px;
+  font-family: var(--font-display);
+  font-size: 1.375rem;
+  line-height: 1;
+  color: var(--color-phosphor-dim);
+}
+.challenge-prompt {
+  margin: 0 0 22px;
+  font-size: var(--text-lead);
+  line-height: 1.4;
+  font-weight: 700;
+  color: var(--color-phosphor-bright);
+  max-width: 62ch;
+}
+
+.game-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 26px;
+}
+.game-actions__hint {
+  font-size: var(--text-ui);
+  color: var(--color-phosphor-dim);
+}
+
+.handoff {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 18px;
+  padding: 44px 18px;
+  border: 1px dashed var(--color-phosphor-line);
+}
+.handoff__player {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(3.5rem, 10cqi, 6rem);
+  font-weight: 400;
+  line-height: 0.9;
+  color: var(--color-phosphor);
+  text-shadow: var(--glow-display);
+}
+
+.unit-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.unit-card__head > .tag {
+  flex: none;
+}
+.unit-card__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.unit-card__topics {
+  margin: 0;
+  padding-left: 1.2em;
+  font-size: var(--text-ui);
+  color: var(--color-phosphor);
+}
+.unit-card__topics li {
+  margin-bottom: 4px;
+}
+.unit-card__topics li::marker {
+  color: var(--color-phosphor-dim);
+}
+.unit-card__footer {
+  margin-top: auto;
+  padding-top: 8px;
+}
+
+.meter {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 4px 10px;
+  align-items: center;
+}
+.meter__track {
+  height: 12px;
+  border: var(--border-dim);
+  padding: 1px;
+}
+.meter__fill {
+  height: 100%;
+  background-color: var(--color-phosphor);
+}
+.meter__value {
+  font-size: var(--text-ui);
+  font-variant-numeric: tabular-nums;
+}
+
+.source-list {
+  margin: 0;
+  padding-left: 1.2em;
+  font-size: var(--text-ui);
+}
+.source-list li {
+  margin-bottom: 6px;
+}
+
+.result-hero {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 24px;
+}
+.result-hero__score {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(3.5rem, 9cqi, 6rem);
+  font-weight: 400;
+  line-height: 0.85;
+  color: var(--color-phosphor);
+  text-shadow: var(--glow-display);
+}
+.result-hero__max {
+  font-size: 0.45em;
+  color: var(--color-phosphor-dim);
+  text-shadow: none;
+}
+
+@container screen (max-width: 640px) {
+  .game-hud {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .game-hud__stats > * {
+    flex: 1;
+  }
+  .challenge-title {
+    font-size: 2.25rem;
+  }
+  .challenge-prompt {
+    font-size: var(--text-body);
+  }
+}

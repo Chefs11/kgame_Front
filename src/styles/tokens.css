@@ -1,0 +1,71 @@
+/*
+ * Alias semánticos sobre los tokens de Tailwind definidos en globals.css
+ * (@theme). Los estilos de componentes usan estos nombres; para cambiar la
+ * paleta, edita @theme y no este archivo.
+ */
+:root {
+  --c-screen: var(--color-screen);
+  --c-surface: var(--color-screen-raised);
+  --c-surface-2: var(--color-screen-raised);
+  --c-surface-3: #0b2033;
+  --c-amber: var(--color-phosphor);
+  --c-amber-hi: var(--color-phosphor-bright);
+  --c-amber-lo: var(--color-phosphor-line);
+  --c-amber-wash: var(--color-phosphor-wash);
+  --c-amber-wash-2: var(--color-phosphor-wash-strong);
+  --c-text: var(--color-phosphor);
+  --c-text-dim: var(--color-phosphor-dim);
+  --c-ink: var(--color-screen);
+  --c-alert: var(--color-alert);
+  --c-alert-wash: var(--color-alert-wash);
+
+  --font-pixel: var(--font-display);
+
+  --fs-xs: var(--text-meta);
+  --fs-sm: var(--text-ui);
+  --fs-md: var(--text-body);
+  --fs-lg: 1.125rem;
+  --fs-xl: var(--text-lead);
+  --fs-title-sm: var(--text-display-sm);
+  --fs-title-md: 2.25rem;
+  --fs-title-lg: var(--text-display-md);
+  --fs-title-xl: var(--text-display-lg);
+  --lh-tight: 1;
+  --lh-body: var(--text-body--line-height);
+
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 20px;
+  --sp-6: 24px;
+  --sp-7: 32px;
+  --sp-8: 48px;
+
+  --bw: 1px;
+  --bw-2: 2px;
+  --border: 1.5px solid var(--color-phosphor);
+  --border-dim: 1px solid var(--color-phosphor-line);
+  --border-dash: 1px dashed var(--color-phosphor-line);
+
+  --key-depth: 3px;
+  --key-shadow: var(--shadow-key);
+
+  --focus-ring: 2px solid var(--color-phosphor-bright);
+  --focus-offset: 3px;
+
+  --taskbar-h: 56px;
+  --titlebar-h: 40px;
+
+  /* Brillo de fósforo: solo en tipografía display */
+  --glow-display: 0 0 6px rgb(255 182 72 / 0.55), 0 0 18px rgb(255 160 40 / 0.25);
+  --glow-title: var(--glow-display);
+
+  --dur-fast: 80ms;
+  --dur-med: 160ms;
+}
+
+[data-presentation="true"] {
+  --glow-display: none;
+  --glow-title: none;
+}

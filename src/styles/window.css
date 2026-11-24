@@ -1,0 +1,255 @@
+/* ==========================================================
+ * Ventanas
+ * ========================================================== */
+
+.window {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  min-width: 0;
+  background-color: var(--color-screen);
+  border: 1.5px solid var(--color-phosphor);
+  box-shadow: var(--shadow-window);
+}
+
+.window--main {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: max(0px, calc(100% - 1000px));
+}
+.window--main[data-maximized="true"] {
+  right: 0;
+}
+
+.window--dialog {
+  position: absolute;
+  z-index: 10;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: min(480px, calc(100% - 24px));
+  max-height: calc(100% - 24px);
+}
+
+/* Ventana de fondo (inactiva, decorativa) */
+.window--background {
+  position: absolute;
+  z-index: 1;
+  top: 26px;
+  right: 0;
+  width: 280px;
+  border-color: var(--color-phosphor-line);
+  box-shadow: none;
+}
+.window--background .window__titlebar {
+  background-color: transparent;
+  color: var(--color-phosphor-dim);
+  border-bottom: var(--border-dim);
+}
+.window--background .window__body {
+  padding: 14px 16px;
+  font-size: var(--text-ui);
+  color: var(--color-phosphor-dim);
+}
+.window--background .window__body p {
+  margin: 0;
+}
+
+.window__titlebar {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: var(--titlebar-h);
+  padding: 0 6px 0 12px;
+  background-color: var(--color-phosphor);
+  color: var(--color-screen);
+}
+.window__icon {
+  width: 18px;
+  height: 18px;
+  flex: none;
+}
+.window__title {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  font-size: var(--text-ui);
+  font-weight: 700;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.window__controls {
+  display: flex;
+  gap: 6px;
+}
+/* Controles funcionales: tecla cuadrada con área táctil ampliada a 44px */
+.window__btn {
+  position: relative;
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  background-color: var(--color-phosphor);
+  color: var(--color-screen);
+  border: 1.5px solid var(--color-screen);
+  box-shadow: 2px 2px 0 0 rgb(2 11 20 / 0.55);
+  cursor: pointer;
+  text-decoration: none;
+}
+.window__btn::before {
+  content: "";
+  position: absolute;
+  inset: -7px;
+}
+.window__btn svg {
+  width: 18px;
+  height: 18px;
+}
+.window__btn:hover {
+  background-color: var(--color-phosphor-bright);
+}
+.window__btn:active,
+.window__btn[aria-pressed="true"] {
+  transform: translate(2px, 2px);
+  box-shadow: none;
+}
+.window__btn:focus-visible {
+  outline: 2px solid var(--color-screen);
+  outline-offset: 2px;
+}
+
+/* Ruta: Escritorio / Jugar / Partida */
+.window__path {
+  flex: none;
+  padding: 8px 16px;
+  border-bottom: var(--border-dim);
+  font-size: var(--text-ui);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.window__path ol {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  min-width: 0;
+}
+.window__path li {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+.window__path li + li::before {
+  content: "/";
+  margin: 0 10px;
+  color: var(--color-phosphor-line);
+}
+.window__crumb {
+  color: var(--color-phosphor-dim);
+  text-decoration: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+a.window__crumb:hover {
+  color: var(--color-phosphor);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+a.window__crumb:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: 2px;
+}
+.window__crumb[aria-current="page"] {
+  color: var(--color-phosphor);
+  font-weight: 700;
+}
+
+.window__body {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: 28px 32px 32px;
+  scrollbar-color: var(--color-phosphor-line) transparent;
+  scrollbar-width: thin;
+}
+.window__body:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: -4px;
+}
+
+.statusbar {
+  flex: none;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 7px 16px;
+  border-top: var(--border-dim);
+  font-size: var(--text-meta);
+  color: var(--color-phosphor-dim);
+  min-height: 32px;
+}
+.statusbar__item {
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.statusbar__item--end {
+  text-align: right;
+}
+
+.dialog-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 9;
+  background-color: rgb(1 6 11 / 0.78);
+}
+
+@container screen (min-width: 1101px) {
+  .desktop__windows[data-with-background="true"] > .window--main:not([data-maximized="true"]) {
+    right: 190px;
+  }
+}
+
+@container screen (max-width: 1100px) {
+  .window--background {
+    display: none;
+  }
+}
+
+@container screen (max-width: 640px) {
+  .window--main {
+    right: 0;
+    box-shadow: none;
+  }
+  .window__btn--max {
+    display: none;
+  }
+  .window__body {
+    padding: 18px 14px 24px;
+  }
+  .window__path {
+    padding: 6px 12px;
+  }
+  .window__path li:not(:nth-last-child(-n + 2)) {
+    display: none;
+  }
+  .window__path li:nth-last-child(2)::before {
+    display: none;
+  }
+  .statusbar__item--end {
+    display: none;
+  }
+}

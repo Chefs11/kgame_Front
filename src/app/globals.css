@@ -1,26 +1,119 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/*
+ * Tokens de diseño (Tailwind v4). Son la única fuente de verdad: generan
+ * utilidades (bg-screen, text-phosphor, font-display…) y variables CSS
+ * (--color-screen, --font-display…) que usan los estilos de componentes.
+ */
+@theme {
+  /* Pantalla (fósforo ámbar sobre azul noche) */
+  --color-screen: #020b14;
+  --color-screen-raised: #061624;
+  --color-screen-sunken: #01060b;
+  --color-phosphor: #ffb648;
+  --color-phosphor-bright: #ffd08a;
+  --color-phosphor-dim: #c08d42; /* texto secundario: 6.6:1 sobre screen */
+  --color-phosphor-line: #8c6528; /* bordes de controles: 3.9:1 sobre screen */
+  --color-phosphor-deep: #4d3714; /* sombra dura de teclas */
+  --color-phosphor-wash: rgb(255 182 72 / 0.12);
+  --color-phosphor-wash-strong: rgb(255 182 72 / 0.22);
+  --color-alert: #ff7a5c; /* único color adicional: error / riesgo (7.3:1) */
+  --color-alert-wash: rgb(255 122 92 / 0.12);
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  /* Monitor beige y cuarto */
+  --color-case: #e8dfc7;
+  --color-case-light: #f4eedd;
+  --color-case-shade: #cfc3a5;
+  --color-case-deep: #a39778;
+  --color-case-ink: #5c5442;
+  --color-bezel: #262219;
+  --color-wall: #4a3b2e;
+  --color-wall-lit: #8d6d4c;
+  --color-wood: #5a3a22;
+  --color-wood-light: #7a5233;
+  --color-led: #5dff9b;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  /* Tipografía */
+  --font-display: var(--font-jersey), "Courier New", monospace;
+  --font-mono: var(--font-chivo), ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+
+  --text-meta: 0.8125rem;
+  --text-meta--line-height: 1.4;
+  --text-ui: 0.9375rem;
+  --text-ui--line-height: 1.45;
+  --text-body: 1.0625rem;
+  --text-body--line-height: 1.6;
+  --text-lead: 1.25rem;
+  --text-lead--line-height: 1.45;
+  --text-display-sm: 1.75rem;
+  --text-display-sm--line-height: 1;
+  --text-display-md: 2.75rem;
+  --text-display-md--line-height: 0.95;
+  --text-display-lg: 4rem;
+  --text-display-lg--line-height: 0.9;
+
+  /* Sombras duras (nada de sombras difusas flotantes) */
+  --shadow-key: 3px 3px 0 0 var(--color-phosphor-deep);
+  --shadow-key-sm: 2px 2px 0 0 var(--color-phosphor-deep);
+  --shadow-window: 6px 6px 0 0 rgb(0 0 0 / 0.55);
+
+  /* Movimiento */
+  --ease-step: steps(6, end);
+  --animate-blink: blink 1.06s steps(1, end) infinite;
+
+  @keyframes blink {
+    50% {
+      opacity: 0;
+    }
   }
 }
 
+@import "../styles/tokens.css";
+@import "../styles/monitor.css";
+@import "../styles/desktop.css";
+@import "../styles/window.css";
+@import "../styles/ui.css";
+@import "../styles/game.css";
+@import "../styles/motion.css";
+
+html,
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  overflow: hidden;
+  background-color: var(--color-wall);
+  color: var(--c-text);
+  font-family: var(--font-mono);
+  font-size: var(--text-body);
+  line-height: var(--text-body--line-height);
+  -webkit-font-smoothing: antialiased;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+::selection {
+  background-color: var(--color-phosphor);
+  color: var(--color-screen);
+}
+
+a {
+  color: inherit;
+}
+
+button {
+  font: inherit;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  text-wrap: balance;
 }

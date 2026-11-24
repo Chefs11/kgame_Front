@@ -1,0 +1,23 @@
+/* ==========================================================
+ * Movimiento reducido: preferencia del sistema o ajuste del juego
+ * ========================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .room[data-motion="system"] *,
+  .room[data-motion="system"] *::before,
+  .room[data-motion="system"] *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    animation-delay: 0ms !important;
+    transition-duration: 1ms !important;
+  }
+}
+
+.room[data-motion="reduce"] *,
+.room[data-motion="reduce"] *::before,
+.room[data-motion="reduce"] *::after {
+  animation-duration: 1ms !important;
+  animation-iteration-count: 1 !important;
+  animation-delay: 0ms !important;
+  transition-duration: 1ms !important;
+}
