@@ -21,7 +21,7 @@ interface TaskbarProps {
  * En teléfono aparece «Menú» con todas las secciones.
  */
 export function Taskbar({ screen, isHome }: TaskbarProps) {
-  const { sound, saveProgress } = useSettings();
+  const { sound, saveProgress, simple, motion } = useSettings();
   const { games } = useProgress();
   const [menuOpen, setMenuOpen] = useState(false);
   const menuId = useId();
@@ -81,6 +81,27 @@ export function Taskbar({ screen, isHome }: TaskbarProps) {
               </li>
             ))}
           </ul>
+          <p className="start-menu__title start-menu__title--sub">Ajustes</p>
+          <div className="start-menu__settings">
+            <button
+              type="button"
+              className="start-menu__toggle"
+              aria-pressed={simple}
+              onClick={() => updateSettings({ simple: !simple })}
+            >
+              <PixelIcon name="presentation" className="start-menu__icon" />
+              Modo simple (sin efectos CRT)
+            </button>
+            <button
+              type="button"
+              className="start-menu__toggle"
+              aria-pressed={motion === "reduce"}
+              onClick={() => updateSettings({ motion: motion === "reduce" ? "system" : "reduce" })}
+            >
+              <PixelIcon name="motion" className="start-menu__icon" />
+              Reducir movimiento
+            </button>
+          </div>
         </div>
       )}
 

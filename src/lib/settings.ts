@@ -9,8 +9,8 @@ export interface Settings {
   /** Sonido apagado por defecto. */
   sound: boolean;
   view: MonitorView;
-  /** Oculta el cuarto y reduce efectos (scanlines, brillo, curvatura). */
-  presentation: boolean;
+  /** Modo simple: apaga los efectos CRT (scanlines, halo, reflejos, parpadeo). */
+  simple: boolean;
   motion: MotionPreference;
   /** Guardar resultados de partidas en este dispositivo. */
   saveProgress: boolean;
@@ -19,7 +19,7 @@ export interface Settings {
 export const DEFAULT_SETTINGS: Settings = {
   sound: false,
   view: "desk",
-  presentation: false,
+  simple: false,
   motion: "system",
   saveProgress: true,
 };
@@ -32,7 +32,8 @@ export const settingsStore = createLocalStore<Settings>({
     return {
       sound: typeof r.sound === "boolean" ? r.sound : DEFAULT_SETTINGS.sound,
       view: r.view === "near" ? "near" : "desk",
-      presentation: r.presentation === true,
+      // `presentation` es el nombre anterior del ajuste (v0.1); se migra a `simple`.
+      simple: r.simple === true || (r as { presentation?: boolean }).presentation === true,
       motion: r.motion === "reduce" ? "reduce" : "system",
       saveProgress: r.saveProgress !== false,
     };

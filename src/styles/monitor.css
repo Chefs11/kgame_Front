@@ -273,9 +273,8 @@
   opacity: 1;
 }
 
-/* Panel integrado al mentón (vista cercana y presentación) */
-.room[data-view="near"] .dock,
-.room[data-presentation="true"] .dock {
+/* Panel integrado al mentón (vista cercana) */
+.room[data-view="near"] .dock {
   position: static;
   flex-direction: row;
   margin-right: auto;
@@ -284,12 +283,10 @@
   border: 0;
   gap: 2px;
 }
-.room[data-view="near"] .monitor__brand,
-.room[data-presentation="true"] .monitor__brand {
+.room[data-view="near"] .monitor__brand {
   margin-right: 8px;
 }
-.room[data-view="near"] .dock__sep,
-.room[data-presentation="true"] .dock__sep {
+.room[data-view="near"] .dock__sep {
   width: 1px;
   height: auto;
   margin: 8px 4px;
@@ -303,8 +300,7 @@
   background: rgb(0 0 0 / 0.08);
   border-color: var(--color-case-deep);
 }
-.room[data-view="near"] .dock__tip,
-.room[data-presentation="true"] .dock__tip {
+.room[data-view="near"] .dock__tip {
   left: 50%;
   top: auto;
   bottom: calc(100% + 8px);
@@ -339,57 +335,8 @@
   min-height: 0;
 }
 
-/* ---------- Modo presentación: sin cuarto y sin efectos ---------- */
-.room[data-presentation="true"] {
-  background-color: #000;
-}
-.room[data-presentation="true"] .scene,
-.room[data-presentation="true"] .monitor__side,
-.room[data-presentation="true"] .monitor__neck,
-.room[data-presentation="true"] .monitor__base,
-.room[data-presentation="true"] .monitor__shadow,
-.room[data-presentation="true"] .monitor__case::before,
-.room[data-presentation="true"] .monitor__chin::before {
-  display: none;
-}
-.room[data-presentation="true"] .monitor {
-  position: relative;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100dvh;
-}
-.room[data-presentation="true"] .monitor__case {
-  padding: 0;
-  border-radius: 0;
-  background: #0d0d0c;
-  box-shadow: none;
-}
-.room[data-presentation="true"] .monitor__bezel {
-  padding: 0;
-  border-radius: 0;
-  background: none;
-  box-shadow: none;
-}
-.room[data-presentation="true"] .monitor__chin {
-  height: 56px;
-  min-height: 0;
-  padding: 0 12px;
-  border-top: 1px solid #262626;
-}
-.room[data-presentation="true"] .monitor__brand {
-  color: #a9a293;
-  text-shadow: none;
-}
-.room[data-presentation="true"] .dock__btn {
-  color: #cfc6b2;
-}
-.room[data-presentation="true"] .dock__btn[aria-pressed="true"] {
-  color: var(--color-phosphor);
-}
-
 /* ---------- Pantallas medianas: el panel pasa al mentón ---------- */
-@media (min-width: 641px) and (max-width: 1100px) {
+@media (min-width: 768px) and (max-width: 1100px) {
   .room .dock {
     position: static;
     flex-direction: row;
@@ -427,13 +374,16 @@
   }
 }
 
-/* ---------- Teléfono: siempre vista cercana ---------- */
-@media (max-width: 640px) {
+/* ---------- Teléfono y pantallas angostas (< 768 px) ----------
+ * Sin escena ni marco: la pantalla ocupa todo el viewport. El modo simple y
+ * el movimiento se ajustan desde «Menú» y desde Ayuda. */
+@media (max-width: 767px) {
   .room .scene,
   .room .monitor__side,
   .room .monitor__neck,
   .room .monitor__base,
-  .room .monitor__shadow {
+  .room .monitor__shadow,
+  .room .monitor__chin {
     display: none;
   }
   .room .monitor {
@@ -444,44 +394,18 @@
     height: 100dvh;
   }
   .room .monitor__case {
-    padding: 6px 6px 0;
+    padding: 0;
     border-radius: 0;
+    background: var(--color-screen);
+    box-shadow: none;
+  }
+  .room .monitor__case::before {
+    display: none;
   }
   .room .monitor__bezel {
-    padding: 5px;
-    border-radius: 12px;
-  }
-  .room .monitor__chin {
-    height: 56px;
-    min-height: 0;
-    gap: 8px;
-    padding: 0 4px;
-  }
-  .room .monitor__brand,
-  .room .monitor__slot {
-    display: none;
-  }
-  .room .monitor__power {
-    margin-left: auto;
-  }
-  .room .dock {
-    position: static;
-    margin-right: auto;
-    flex-direction: row;
     padding: 0;
-    background: transparent;
-    border: 0;
-    gap: 2px;
-  }
-  .room .dock__btn {
-    color: var(--color-case-ink);
-  }
-  .room .dock__btn:nth-child(1),
-  .room .dock__btn:nth-child(2),
-  .room .dock__sep {
-    display: none;
-  }
-  .room .dock__tip {
-    display: none;
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
   }
 }

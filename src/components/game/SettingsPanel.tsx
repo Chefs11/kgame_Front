@@ -39,17 +39,18 @@ export function SettingsPanel() {
       <div className="panel">
         <h3 className="panel__title">Pantalla</h3>
         <p className="text-dim text-small">
-          El modo presentación oculta el cuarto y quita las líneas de barrido y el brillo. Útil para proyectar.
+          El modo simple quita los efectos CRT (líneas de barrido, brillo, reflejos y parpadeo) para leer mejor. Se
+          guarda en este navegador.
         </p>
         <div className="btn-row">
           <Button
             variant="secondary"
             size="sm"
             icon="presentation"
-            aria-pressed={s.presentation}
-            onClick={() => updateSettings({ presentation: !s.presentation })}
+            aria-pressed={s.simple}
+            onClick={() => updateSettings({ simple: !s.simple })}
           >
-            Modo presentación
+            Modo simple
           </Button>
           <Button
             variant="secondary"

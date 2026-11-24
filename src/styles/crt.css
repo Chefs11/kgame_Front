@@ -27,8 +27,14 @@
 }
 
 /* Halo (bloom) del fósforo: suave en el texto, más fuerte en títulos */
-.room:not([data-presentation="true"]) .screen__content {
+.room:not([data-simple="true"]) .screen__content {
   text-shadow: 0 0 3px rgb(255 182 72 / 0.32);
+}
+
+@media (max-width: 767px) {
+  .room .screen {
+    border-radius: 0;
+  }
 }
 
 /* ---------- Capas de efecto (nunca capturan clics) ---------- */
@@ -104,6 +110,18 @@
 }
 .room[data-motion="reduce"] .screen__flicker {
   animation: none;
+}
+
+/* Modo simple: sin efectos CRT; el vidrio queda limpio y el texto nítido */
+.room[data-simple="true"] .screen__fx {
+  display: none;
+}
+.room[data-simple="true"] .screen {
+  background: var(--color-screen);
+  box-shadow: none;
+}
+.room[data-simple="true"] .desk-icon__glyph {
+  filter: none;
 }
 
 .screen__off {

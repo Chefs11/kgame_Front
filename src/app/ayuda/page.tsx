@@ -53,8 +53,9 @@ export default function Ayuda() {
 
       <SectionHeader title="Sonido, movimiento y pantalla" />
       <p className="text-dim text-small">
-        También tienes estos ajustes a la mano: el sonido en la barra de tareas, y la vista, el modo presentación y el
-        movimiento en el panel junto al monitor. El juego funciona completo sin sonido.
+        También tienes estos ajustes a la mano: el sonido en la barra de tareas; la vista, el modo simple y el
+        movimiento en el panel junto al monitor; y, en el celular, en el botón de menú. El juego funciona completo sin
+        sonido.
       </p>
       <SettingsPanel />
 
@@ -79,8 +80,8 @@ export default function Ayuda() {
             derecha del monitor.
           </li>
           <li>
-            <strong>Cuesta leer.</strong> Activa el modo presentación para quitar las líneas de barrido y el brillo, o
-            usa la lupa para acercarte a la pantalla.
+            <strong>Cuesta leer.</strong> Activa el modo simple para quitar las líneas de barrido, el brillo y el
+            parpadeo, o usa la lupa para acercarte a la pantalla.
           </li>
           <li>
             <strong>La ventana tapa los iconos.</strong> Pulsa el botón de restaurar en la barra de título o vuelve al

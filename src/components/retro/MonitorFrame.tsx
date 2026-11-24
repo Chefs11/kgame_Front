@@ -97,7 +97,7 @@ export function MonitorFrame({ children, photo = false }: { children: ReactNode;
     <div
       className="room"
       data-view={settings.view}
-      data-presentation={settings.presentation}
+      data-simple={settings.simple}
       data-motion={settings.motion}
       data-power={power ? "on" : "off"}
     >
@@ -160,22 +160,20 @@ export function MonitorFrame({ children, photo = false }: { children: ReactNode;
                 icon="zoomIn"
                 label="Acercar a la pantalla"
                 pressed={settings.view === "near"}
-                disabled={settings.presentation}
                 onClick={() => updateSettings({ view: "near" })}
               />
               <DockButton
                 icon="zoomOut"
                 label="Ver el escritorio completo"
                 pressed={settings.view === "desk"}
-                disabled={settings.presentation}
                 onClick={() => updateSettings({ view: "desk" })}
               />
               <span className="dock__sep" aria-hidden="true" />
               <DockButton
                 icon="presentation"
-                label={settings.presentation ? "Salir del modo presentación" : "Modo presentación: sin cuarto ni efectos"}
-                pressed={settings.presentation}
-                onClick={() => updateSettings({ presentation: !settings.presentation })}
+                label={settings.simple ? "Modo simple activado: volver a los efectos CRT" : "Modo simple: quitar efectos CRT"}
+                pressed={settings.simple}
+                onClick={() => updateSettings({ simple: !settings.simple })}
               />
               <DockButton
                 icon="motion"

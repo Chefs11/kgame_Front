@@ -65,7 +65,7 @@
   --dur-med: 160ms;
 }
 
-[data-presentation="true"] {
+[data-simple="true"] {
   --glow-display: none;
   --glow-title: none;
 }

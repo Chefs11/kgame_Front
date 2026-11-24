@@ -179,8 +179,8 @@
   .game-hud {
     grid-template-columns: minmax(0, 1fr);
   }
-  .game-hud__stats > * {
-    flex: 1;
+  .game-hud__stats {
+    justify-content: flex-end;
   }
   .challenge-title {
     font-size: 2.25rem;

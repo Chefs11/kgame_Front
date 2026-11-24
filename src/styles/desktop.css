@@ -338,6 +338,44 @@
 .start-menu__link[aria-current="page"] {
   border-color: var(--color-phosphor);
 }
+.start-menu__title--sub {
+  background: transparent;
+  color: var(--color-phosphor-dim);
+  border-top: var(--border-dim);
+}
+.start-menu__settings {
+  display: grid;
+  gap: 6px;
+  padding: 0 6px 8px;
+}
+.start-menu__toggle {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 48px;
+  padding: 6px 10px;
+  text-align: left;
+  font-family: var(--font-mono);
+  font-size: var(--text-ui);
+  color: var(--color-phosphor);
+  background: transparent;
+  border: 1.5px solid var(--color-phosphor-line);
+  cursor: pointer;
+}
+.start-menu__toggle[aria-pressed="true"] {
+  border-color: var(--color-phosphor);
+  background: var(--color-phosphor-wash-strong);
+}
+.start-menu__toggle[aria-pressed="true"]::after {
+  content: "Activado";
+  margin-left: auto;
+  font-size: var(--text-meta);
+  font-weight: 700;
+}
+.start-menu__toggle:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: -2px;
+}
 .start-menu__icon {
   width: 24px;
   height: 24px;
@@ -447,11 +485,18 @@
   }
   .task-tab {
     padding: 6px 10px;
-    max-width: 62%;
+    max-width: 100%;
   }
 }
 @container screen (max-width: 380px) {
   .taskbar__pins > li[data-priority="2"] {
     display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .task-key {
+    min-width: 44px;
+    height: 44px;
   }
 }

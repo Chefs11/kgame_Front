@@ -1052,3 +1052,21 @@ details.disclosure[open] > summary {
   outline: var(--focus-ring);
   outline-offset: 3px;
 }
+
+/* Teléfono: todos los controles con al menos 44 × 44 px */
+@media (max-width: 767px) {
+  .btn,
+  .btn--sm {
+    min-height: 48px;
+  }
+  .back-link,
+  details.disclosure > summary,
+  .checkbox {
+    min-height: 44px;
+    align-items: center;
+  }
+  .text-link {
+    display: inline-block;
+    padding: 6px 0;
+  }
+}
