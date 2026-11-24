@@ -57,11 +57,24 @@ src/
     game-engine.ts        Lógica pura: armado de partidas, puntaje, resúmenes
     game-context.tsx      Estado de la partida en curso
     progress.ts           Progreso local (localStorage)
-    settings.ts           Ajustes (sonido, vista, presentación, movimiento)
+    settings.ts           Ajustes (sonido, vista, modo simple, movimiento)
     sound.ts              Tonos generados con Web Audio (apagado por defecto)
   styles/                 Estilos por área (monitor, escritorio, ventanas, ui, juego) y
                           tokens.css (alias semánticos de los tokens de Tailwind)
 ```
+
+## Escena y monitor
+
+- La escena del cuarto (`src/components/retro/RoomScene.tsx`, `src/styles/scene.css`) está hecha solo
+  con CSS: luz de ventana con persiana, lámpara, estantería, planta, torre y escritorio, con desenfoque
+  estático, grano SVG y viñeta.
+- **Foto opcional:** si colocas `public/scene/bg.jpg`, el layout la detecta en el servidor y la usa
+  como fondo en lugar de la escena CSS (vuelve a compilar o reinicia `npm run dev`). Registra su autor
+  y licencia en `ATTRIBUTIONS.md`.
+- El monitor (`src/styles/monitor.css`) se dimensiona por la altura (≈88 % del viewport); solo la
+  carcasa tiene perspectiva 3D, la pantalla queda plana para que el texto sea nítido.
+- Efectos CRT en `src/styles/crt.css`. El parpadeo solo anima la opacidad de una capa propia;
+  medido a 60 fps con desplazamiento continuo y todos los efectos activos.
 
 ## Sistema de diseño
 
@@ -130,7 +143,10 @@ Contraste comprobado sobre `screen`: `phosphor` 11.3:1, `phosphor-dim` 6.7:1, `a
 - El diálogo de salida bloquea el contenido de fondo (`inert`) y devuelve el foco con `Esc`.
 - El temporizador es opcional y se elige antes de empezar (WCAG 2.2.1).
 - Respeta `prefers-reduced-motion` y además tiene un ajuste «Movimiento reducido».
-- «Modo presentación» oculta el cuarto y quita scanlines, brillo y curvatura.
+- «Modo simple» apaga los efectos CRT (scanlines, halo, reflejos y parpadeo) y se guarda en
+  `localStorage`. Está en el panel junto al monitor, en Ayuda y, en el celular, en el menú.
+- Por debajo de 768 px se ocultan la escena y el marco del monitor: la pantalla ocupa todo el viewport
+  y los controles miden al menos 44 px.
 - La retroalimentación separa «Por qué» del **Fundamento legal o ético**, que cita la ley mexicana y el
   artículo cuando aplica (LFPDPPP, LFDA, LFPPI, CPF, LFPC, Constitución).
 
