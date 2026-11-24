@@ -1,6 +1,6 @@
-# kgame_Front — [Nombre del juego]
+# ÉticaTIC Arcade (kgame_Front)
 
-Frontend de un juego educativo para repasar **Ética y Legislación en Tecnologías de la Información**.
+**ÉticaTIC Arcade** es el frontend de un juego educativo para repasar **Ética y Legislación en Tecnologías de la Información**.
 La interfaz simula una computadora CRT de los años 90: un monitor sobre un escritorio, con un sistema
 operativo retro (iconos, ventanas, barra de tareas) en paleta ámbar.
 
@@ -48,7 +48,7 @@ src/
                           EmptyState, ErrorState, Notice, BackLink, SourceList
     game/                 GameSetup, GamePlay, GameResults, ProgressView, SettingsPanel
   content/                DATOS EDITABLES (sin interfaz)
-    site.ts               Nombre del juego y marcadores de créditos
+    site.ts               Eslogan, curso y marcadores de créditos
     units.ts              Unidades, temas y ponderación de la rúbrica
     sources.ts            Fuentes jurídicas consultadas (con fecha y versión)
     questions/unidad-N.ts Retos de cada unidad
@@ -95,7 +95,9 @@ Contraste comprobado sobre `screen`: `phosphor` 11.3:1, `phosphor-dim` 6.7:1, `a
 
 ### Editar contenido
 
-- **Nombre del juego, equipo, licencia:** `src/content/site.ts`.
+- **Nombre del juego:** constante `GAME_NAME` en `src/lib/brand.ts` (se usa en el título, la portada,
+  los créditos y los metadatos).
+- **Equipo, licencia y eslogan:** `src/content/site.ts`.
 - **Agregar un reto:** añade un objeto al archivo `src/content/questions/unidad-N.ts`. El tipo
   `Question` (`src/content/types.ts`) admite `opcion-multiple` (una opción con `correct: true`) o
   `escenario` (cada opción con `quality` y `consequence`, más `responsibleAlternative`). Incluye

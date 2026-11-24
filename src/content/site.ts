@@ -3,8 +3,11 @@
  * marcadores pendientes. Los textos entre corchetes son marcadores que el
  * equipo debe reemplazar.
  */
+import { GAME_NAME } from "@/lib/brand";
+
 export const SITE = {
-  gameName: "[Nombre del juego]",
+  /** Nombre del juego: se define en src/lib/brand.ts (GAME_NAME). */
+  gameName: GAME_NAME,
   /** Nombre corto para la barra de título del sistema y el fondo de pantalla. */
   systemName: "ETICA-OS",
   monitorBrand: "KG-90",

@@ -1,6 +1,7 @@
 "use client";
 
 import { SITE } from "@/content/site";
+import { GAME_NAME } from "@/lib/brand";
 import { useProgress } from "@/lib/progress";
 import { useSettings } from "@/lib/settings";
 import { ButtonLink } from "../ui/Button";
@@ -20,7 +21,7 @@ export function DesktopHero() {
         <span className="hero__cursor" aria-hidden="true" />
       </p>
       <h1 className="hero__name" id="hero-title">
-        {SITE.gameName}
+        {GAME_NAME}
       </h1>
       <div className="hero__actions">
         <ButtonLink href="/jugar" icon="play">

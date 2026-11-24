@@ -5,6 +5,7 @@ import { ScreenHeader, SectionHeader } from "@/components/ui/Headers";
 import { Notice } from "@/components/ui/States";
 import { QUESTIONS } from "@/content/questions";
 import { CREDITS, SITE } from "@/content/site";
+import { GAME_NAME } from "@/lib/brand";
 import { SOURCES } from "@/content/sources";
 import { UNIT_BY_ID } from "@/content/units";
 
@@ -16,7 +17,7 @@ export default function Creditos() {
     <Window status="Los textos entre [corchetes] los completa el equipo" statusEnd={`Fuentes cotejadas el ${SITE.sourcesConsulted}`}>
       <ScreenHeader
         title="Créditos"
-        subtitle={`${SITE.gameName} — proyecto escolar de ${SITE.course}.`}
+        subtitle={`${GAME_NAME}: proyecto escolar de ${SITE.course}.`}
       />
 
       <Notice>

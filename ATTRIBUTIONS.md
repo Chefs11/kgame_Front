@@ -1,6 +1,6 @@
 # Atribuciones y licencias de terceros
 
-Proyecto escolar de *Ética y Legislación en TI*. Este archivo declara los recursos de terceros
+**ÉticaTIC Arcade**, proyecto escolar de *Ética y Legislación en TI*. Este archivo declara los recursos de terceros
 utilizados.
 
 ## Dependencias principales

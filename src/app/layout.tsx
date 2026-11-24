@@ -4,6 +4,7 @@ import type { Metadata, Viewport } from "next";
 import { Chivo_Mono, Jersey_10 } from "next/font/google";
 import { RetroShell } from "@/components/retro/RetroShell";
 import { SITE } from "@/content/site";
+import { GAME_NAME } from "@/lib/brand";
 import "./globals.css";
 
 /* Fuentes abiertas (SIL Open Font License 1.1), autoalojadas por next/font. */
@@ -23,10 +24,11 @@ const mono = Chivo_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: SITE.gameName,
-    template: `%s · ${SITE.gameName}`,
+    default: GAME_NAME,
+    template: `%s · ${GAME_NAME}`,
   },
   description: SITE.tagline,
+  applicationName: GAME_NAME,
 };
 
 export const viewport: Viewport = {
