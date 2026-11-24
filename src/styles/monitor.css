@@ -1,204 +1,236 @@
 /* ==========================================================
- * Cuarto y monitor CRT beige (carcasa, mentón, base, panel de vista)
- * La pantalla y sus efectos viven en crt.css.
+ * Escenario fotográfico: foto del cuarto y del monitor, cámara,
+ * capas de vidrio, derrame de luz, controles físicos y panel de vista.
+ * La alineación sale de src/lib/monitor-config.ts (porcentajes).
+ * La pantalla (contenido del juego) vive en crt.css.
  * ========================================================== */
 
 .room {
+  --glass-reflect: 0.62; /* a) reflejos reales de la foto sobre el juego */
+  --glass-shade: 0.9; /* b) sombra del labio del bisel en las orillas */
+  --spill: 1; /* e) derrame de luz ámbar */
+  --cam-ms: 1000ms;
+
   position: relative;
   height: 100dvh;
   width: 100%;
   overflow: hidden;
   overflow: clip;
-  background-color: #2b2018;
+  background-color: #0d0b09; /* fondo oscuro limpio mientras carga la foto */
+  perspective: 2400px;
 }
-
-/* ---------- Monitor: dimensionado por la altura (≈88 % del viewport) ---------- */
-.monitor {
-  --mon-h: min(88dvh, calc(94vw / 1.18));
-  position: absolute;
-  z-index: 2;
-  /* Sin transform: así el panel de vista (position: fixed) se ancla al viewport */
-  left: calc(50% - var(--mon-h) * 0.59);
-  top: max(10px, calc((100dvh - var(--mon-h)) * 0.42));
-  display: flex;
-  flex-direction: column;
-  width: calc(var(--mon-h) * 1.18);
-  height: var(--mon-h);
-}
-
-/* Lateral derecho en perspectiva: da volumen sin deformar la pantalla */
-.monitor__side {
-  position: absolute;
-  z-index: 0;
-  top: 2.5%;
-  bottom: 15%;
-  right: -2.6%;
-  width: 5.5%;
-  border-radius: 0 26px 30px 0;
-  background:
-    repeating-linear-gradient(170deg, rgb(255 244 214 / 0.35) 0 12px, transparent 12px 24px),
-    linear-gradient(90deg, #cdbf9f 0%, #e2d6ba 55%, #bfb092 100%);
-  transform: perspective(700px) rotateY(-58deg);
-  transform-origin: left center;
-  box-shadow: 14px 10px 30px rgb(0 0 0 / 0.35);
-}
-
-.monitor__case {
-  position: relative;
-  z-index: 1;
-  flex: 1;
-  min-height: 0;
-  display: flex;
-  flex-direction: column;
-  padding: 4.6% 5% 0;
-  border-radius: 3.2% / 4%;
-  background:
-    radial-gradient(ellipse 70% 50% at 85% 10%, rgb(255 250 235 / 0.55), transparent 70%),
-    linear-gradient(180deg, #f3ecda 0%, #e7ddc4 22%, #ddd1b5 70%, #cfc2a3 100%);
-  box-shadow:
-    inset 0 3px 0 rgb(255 255 255 / 0.75),
-    inset 3px 0 0 rgb(255 255 255 / 0.35),
-    inset -10px 0 24px rgb(120 100 60 / 0.18),
-    inset 0 -10px 0 rgb(0 0 0 / 0.06),
-    0 3px 0 #b3a685,
-    0 40px 70px rgb(0 0 0 / 0.55);
-}
-/* Rayas de sol de la persiana sobre la carcasa (debajo del vidrio) */
-.monitor__case::before {
+/* Relleno ambiental cuando la foto no cubre el viewport (tablet vertical):
+ * una versión de 64 px de la misma foto, ampliada por el navegador (sin filtros). */
+.room::before {
   content: "";
   position: absolute;
   inset: 0;
-  border-radius: inherit;
-  background: repeating-linear-gradient(168deg, rgb(255 244 214 / 0.34) 0 16px, transparent 16px 32px);
-  mask-image: linear-gradient(90deg, transparent 55%, #000 95%);
+  background: url("/scene/room-monitor-ambient.webp") center / cover no-repeat;
+  opacity: 0.9;
+}
+
+/* ---------- Stage: todo se mueve como una sola escena ---------- */
+.stage {
+  position: absolute;
+  isolation: isolate;
+  transform-origin: 50% 50%;
+  transform: scale(1);
+  opacity: 0;
+}
+.room[data-ready="true"] .stage {
+  opacity: 1;
+}
+.room[data-anim="true"] .stage {
+  transition: transform var(--cam-ms) cubic-bezier(0.65, 0, 0.35, 1), opacity 200ms ease-out;
+}
+/* Vista de sala: se aleja toda la escena; parallax sutil con el puntero */
+.room[data-view="desk"] .stage {
+  transform: scale(var(--room-scale, 0.6)) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+}
+.room[data-view="desk"][data-anim="true"] .stage {
+  transition:
+    transform var(--cam-ms) cubic-bezier(0.65, 0, 0.35, 1),
+    opacity 200ms ease-out;
+}
+/* Los botones de vista usan una transición algo más corta que la entrada */
+.room[data-phase="on"] {
+  --cam-ms: 750ms;
+}
+
+.stage__photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  user-select: none;
   pointer-events: none;
 }
 
-/* Hundimiento del bisel alrededor del vidrio */
-.monitor__bezel {
-  position: relative;
+/* e) Derrame de luz: halo ámbar tenue sobre el bisel interior y el plástico inferior */
+.stage__spill {
+  position: absolute;
   z-index: 1;
-  flex: 1;
-  min-height: 0;
-  display: flex;
-  padding: clamp(10px, 1.4%, 18px);
-  border-radius: 30px / 34px;
-  background: linear-gradient(180deg, #403a2f 0%, #26221a 60%, #1c1914 100%);
+  pointer-events: none;
+  border-radius: 6% / 8%;
   box-shadow:
-    inset 0 0 0 2px #15130f,
-    inset 0 14px 26px rgb(0 0 0 / 0.7),
-    0 0 0 6px #d6c9ab,
-    0 0 0 7px rgb(0 0 0 / 0.1),
-    0 2px 0 7px rgb(255 255 255 / 0.4);
+    0 0 6cqmin 1.2cqmin rgb(255 170 70 / 0.16),
+    0 2.5cqmin 9cqmin 1cqmin rgb(255 160 60 / 0.1);
+  mix-blend-mode: screen;
+  opacity: var(--spill);
+  transition: opacity 220ms ease-out;
+}
+.stage__desk-glow {
+  position: absolute;
+  z-index: 1;
+  left: 34%;
+  right: 34%;
+  top: 86%;
+  height: 7%;
+  pointer-events: none;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at 50% 40%, rgb(255 175 80 / 0.14), transparent 70%);
+  mix-blend-mode: soft-light;
+  opacity: var(--spill);
+  transition: opacity 220ms ease-out;
+}
+.room[data-power="off"] .stage__spill,
+.room[data-power="off"] .stage__desk-glow,
+.room[data-phase="pending"] .stage__spill,
+.room[data-phase="pending"] .stage__desk-glow {
+  opacity: 0;
+}
+.room[data-phase="intro"] .stage__spill,
+.room[data-phase="intro"] .stage__desk-glow {
+  animation: spill-in 400ms ease-out 450ms both;
+}
+@keyframes spill-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: var(--spill);
+  }
 }
 
-.monitor__chin {
-  position: relative;
-  z-index: 1;
-  flex: none;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  height: 11%;
-  min-height: 56px;
-  padding: 0 6px;
+/* a) y b) Capas de vidrio: copias de la foto recortadas con el contorno del vidrio */
+.stage__glass {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  clip-path: var(--stage-clip);
+  background-image: image-set(
+    url("/scene/room-monitor.webp") 1x,
+    url("/scene/room-monitor@2x.webp") 2x
+  );
+  background-size: 100% 100%;
 }
-.monitor__chin::before {
+.stage__glass--reflect {
+  mix-blend-mode: screen;
+  opacity: var(--glass-reflect);
+}
+.stage__glass--shade {
+  mix-blend-mode: multiply;
+  opacity: var(--glass-shade);
+  /* Solo orillas y esquinas: el centro queda limpio */
+  mask-image: radial-gradient(ellipse 44% 52% at 50% 44.7%, transparent 72%, #000 100%);
+}
+
+/* ---------- Controles físicos sobre la foto ---------- */
+/* LED: apagado cubre el LED verde de la foto con uno sin luz; encendido brilla con halo */
+.stage__led {
+  position: absolute;
+  z-index: 4;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(circle, #6f7468 0 30%, #a9a690 55%, rgb(214 206 182 / 0) 72%);
+}
+.stage__led::after {
   content: "";
   position: absolute;
-  left: 0;
-  right: 0;
-  top: 18%;
-  height: 1px;
-  background: rgb(0 0 0 / 0.1);
-  box-shadow: 0 1px 0 rgb(255 255 255 / 0.55);
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, #d8ffe6 0 18%, #5dff9b 35%, rgb(93 255 155 / 0) 70%);
+  box-shadow: 0 0 0.6cqmin 0.2cqmin rgb(93 255 155 / 0.45);
+  opacity: 0;
+  transition: opacity 160ms ease-out;
 }
-.monitor__brand {
-  margin-right: auto;
-  font-family: var(--font-display);
-  font-size: 1.625rem;
-  letter-spacing: 0.12em;
-  color: var(--color-case-ink);
-  text-shadow: 0 1px 0 rgb(255 255 255 / 0.6);
+.room[data-power="on"] .stage__led::after {
+  opacity: 1;
 }
-.monitor__slot {
-  width: 72px;
-  height: 13px;
-  border-radius: 3px;
-  background: #24201a;
-  box-shadow: inset 0 3px 4px rgb(0 0 0 / 0.75), 0 1px 0 rgb(255 255 255 / 0.6);
+.room[data-phase="intro"] .stage__led::after {
+  animation: led-on 120ms ease-out 150ms both;
 }
-.monitor__power {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 50px;
-  height: 44px;
+@keyframes led-on {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Hitbox invisible sobre el botón de la foto */
+.stage__power {
+  position: absolute;
+  z-index: 5;
   padding: 0;
-  color: var(--color-case-ink);
-  background: linear-gradient(180deg, #f6f0e0, #d5c8aa);
-  border: 1px solid #a99c7d;
-  border-radius: 6px;
-  box-shadow: 0 4px 0 #a99c7d, inset 0 1px 0 rgb(255 255 255 / 0.8);
+  border: 0;
+  border-radius: 3px;
+  background: transparent;
+  cursor: pointer;
+  transition: transform 80ms linear, box-shadow 80ms linear;
+}
+.stage__power::before {
+  /* área táctil mínima de 44 px aunque la escena esté alejada */
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: max(100%, 44px);
+  height: max(100%, 44px);
+  transform: translate(-50%, -50%);
+}
+.stage__power:hover {
+  box-shadow: inset 0 0 0 999px rgb(255 255 255 / 0.06);
+}
+.stage__power:active {
+  transform: translateY(1.5px);
+  box-shadow: inset 0 2px 3px rgb(0 0 0 / 0.35);
+}
+.stage__power:focus-visible {
+  outline: 3px solid #ffd08a;
+  outline-offset: 4px;
+}
+
+/* ---------- Omitir la entrada ---------- */
+.intro-skip {
+  position: fixed;
+  z-index: 20;
+  left: 50%;
+  bottom: 22px;
+  transform: translateX(-50%);
+  min-height: 44px;
+  padding: 8px 20px;
+  font-family: var(--font-mono);
+  font-size: var(--text-ui);
+  font-weight: 700;
+  color: #f1e6cf;
+  background: rgb(20 16 12 / 0.82);
+  border: 1px solid rgb(255 255 255 / 0.2);
+  border-radius: 999px;
   cursor: pointer;
 }
-.monitor__power svg {
-  width: 20px;
-  height: 20px;
+.intro-skip:hover {
+  background: rgb(40 32 24 / 0.9);
 }
-.monitor__power:hover {
-  color: #2f2a20;
-}
-.monitor__power:active,
-.monitor__power[aria-pressed="false"] {
-  transform: translateY(4px);
-  box-shadow: 0 0 0 #a99c7d, inset 0 2px 4px rgb(0 0 0 / 0.22);
-}
-.monitor__power:focus-visible {
-  outline: 3px solid #1d4f91;
+.intro-skip:focus-visible {
+  outline: 2px solid var(--color-phosphor-bright);
   outline-offset: 3px;
 }
-.monitor__led {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: #3d4a40;
-  box-shadow: inset 0 1px 2px rgb(0 0 0 / 0.5);
-}
-.monitor__led[data-on="true"] {
-  background: var(--color-led);
-  box-shadow: 0 0 10px var(--color-led), 0 0 2px #fff inset;
-}
 
-/* Cuello, base y sombra de contacto sobre el escritorio */
-.monitor__neck {
-  align-self: center;
-  flex: none;
-  width: 34%;
-  height: 3%;
-  background: linear-gradient(180deg, #b9ac8d, #d8ccaf 40%, #c4b797);
-  clip-path: polygon(6% 0, 94% 0, 100% 100%, 0 100%);
-}
-.monitor__base {
-  align-self: center;
-  flex: none;
-  width: 52%;
-  height: 3.5%;
-  border-radius: 10px 10px 4px 4px;
-  background: linear-gradient(180deg, #efe7d3, #cfc2a2);
-  box-shadow: inset 0 2px 0 rgb(255 255 255 / 0.6), 0 2px 0 #a99c7d;
-}
-.monitor__shadow {
-  position: absolute;
-  z-index: -1;
-  left: 8%;
-  right: 4%;
-  bottom: -3%;
-  height: 8%;
-  background: radial-gradient(ellipse at 50% 50%, rgb(0 0 0 / 0.55), transparent 70%);
-}
-
-/* ---------- Panel de vista (zoom, efectos, movimiento) ---------- */
+/* ---------- Panel de vista (zoom, modo simple, efectos reducidos) ---------- */
 .dock {
   position: fixed;
   left: 20px;
@@ -230,12 +262,13 @@
   border: 1px solid transparent;
   border-radius: 8px;
   cursor: pointer;
+  transition: background-color 100ms linear;
 }
 .dock__btn svg {
   width: 24px;
   height: 24px;
 }
-.dock__btn:hover:not(:disabled) {
+.dock__btn:hover {
   background: rgb(255 255 255 / 0.08);
 }
 .dock__btn[aria-pressed="true"] {
@@ -243,12 +276,8 @@
   background: rgb(255 182 72 / 0.14);
   border-color: rgb(255 182 72 / 0.5);
 }
-.dock__btn:active:not(:disabled) {
+.dock__btn:active {
   transform: translateY(1px);
-}
-.dock__btn:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
 }
 .dock__btn:focus-visible {
   outline: 2px solid var(--color-phosphor-bright);
@@ -273,139 +302,50 @@
   opacity: 1;
 }
 
-/* Panel integrado al mentón (vista cercana) */
-.room[data-view="near"] .dock {
-  position: static;
-  flex-direction: row;
-  margin-right: auto;
-  padding: 0;
-  background: transparent;
-  border: 0;
-  gap: 2px;
-}
-.room[data-view="near"] .monitor__brand {
-  margin-right: 8px;
-}
-.room[data-view="near"] .dock__sep {
-  width: 1px;
-  height: auto;
-  margin: 8px 4px;
-  background: rgb(0 0 0 / 0.2);
-}
-.room[data-view="near"] .dock__btn {
-  color: var(--color-case-ink);
-}
-.room[data-view="near"] .dock__btn[aria-pressed="true"] {
-  color: #2f2a20;
-  background: rgb(0 0 0 / 0.08);
-  border-color: var(--color-case-deep);
-}
-.room[data-view="near"] .dock__tip {
-  left: 50%;
-  top: auto;
-  bottom: calc(100% + 8px);
-  transform: translateX(-50%);
-}
-
-/* ---------- Vista cercana: la pantalla llena el navegador ---------- */
-.room[data-view="near"] .scene,
-.room[data-view="near"] .monitor__side,
-.room[data-view="near"] .monitor__neck,
-.room[data-view="near"] .monitor__base,
-.room[data-view="near"] .monitor__shadow {
+/* ---------- Modo simple: sin capas de vidrio ni derrame ---------- */
+.room[data-simple="true"] .stage__glass,
+.room[data-simple="true"] .stage__spill,
+.room[data-simple="true"] .stage__desk-glow {
   display: none;
 }
-.room[data-view="near"] .monitor {
-  position: relative;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100dvh;
+
+/* ---------- Efectos reducidos / prefers-reduced-motion ---------- */
+.room[data-reduced="true"] {
+  --cam-ms: 1ms;
 }
-.room[data-view="near"] .monitor__case {
-  padding: 10px 12px 0;
-  border-radius: 0;
+.room[data-reduced="true"] .stage {
+  transform: scale(1);
 }
-.room[data-view="near"] .monitor__bezel {
-  padding: 8px;
-  border-radius: 16px / 20px;
-}
-.room[data-view="near"] .monitor__chin {
-  height: 60px;
-  min-height: 0;
+.room[data-reduced="true"][data-view="desk"] .stage {
+  transform: scale(var(--room-scale, 0.6));
 }
 
-/* ---------- Pantallas medianas: el panel pasa al mentón ---------- */
-@media (min-width: 768px) and (max-width: 1100px) {
-  .room .dock {
-    position: static;
-    flex-direction: row;
-    margin-right: auto;
-    padding: 0;
-    background: transparent;
-    border: 0;
-    gap: 2px;
-  }
-  .room .monitor__brand {
-    margin-right: 8px;
-  }
-  .room .dock__sep {
-    width: 1px;
-    height: auto;
-    margin: 8px 4px;
-    background: rgb(0 0 0 / 0.2);
-  }
-  .room .dock__btn {
-    color: var(--color-case-ink);
-  }
-  .room .dock__btn[aria-pressed="true"] {
-    color: #2f2a20;
-    background: rgb(0 0 0 / 0.08);
-    border-color: var(--color-case-deep);
-  }
-  .room .dock__tip {
-    left: 50%;
-    top: auto;
-    bottom: calc(100% + 8px);
-    transform: translateX(-50%);
-  }
-  .room .monitor__case {
-    padding: 3.5% 3.5% 0;
-  }
+/* Pestaña oculta: se pausan las animaciones */
+.room[data-hidden="true"] * {
+  animation-play-state: paused !important;
 }
 
-/* ---------- Teléfono y pantallas angostas (< 768 px) ----------
- * Sin escena ni marco: la pantalla ocupa todo el viewport. El modo simple y
- * el movimiento se ajustan desde «Menú» y desde Ayuda. */
+/* ---------- Teléfono (< 768 px): la pantalla ocupa todo el viewport ----------
+ * El vidrio del monitor (1.41:1) mediría ~370 × 260 px en un teléfono vertical:
+ * no cabe el juego de forma legible, así que la foto se oculta. */
 @media (max-width: 767px) {
-  .room .scene,
-  .room .monitor__side,
-  .room .monitor__neck,
-  .room .monitor__base,
-  .room .monitor__shadow,
-  .room .monitor__chin {
+  .room .stage {
+    position: static;
+    container-type: normal;
+    width: auto !important;
+    height: auto !important;
+    transform: none !important;
+    opacity: 1;
+  }
+  .room::before,
+  .room .stage__photo,
+  .room .stage__glass,
+  .room .stage__spill,
+  .room .stage__desk-glow,
+  .room .stage__led,
+  .room .stage__power,
+  .room .dock,
+  .room .intro-skip {
     display: none;
-  }
-  .room .monitor {
-    position: relative;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100dvh;
-  }
-  .room .monitor__case {
-    padding: 0;
-    border-radius: 0;
-    background: var(--color-screen);
-    box-shadow: none;
-  }
-  .room .monitor__case::before {
-    display: none;
-  }
-  .room .monitor__bezel {
-    padding: 0;
-    border-radius: 0;
-    background: none;
-    box-shadow: none;
   }
 }

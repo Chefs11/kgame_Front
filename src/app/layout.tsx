@@ -1,5 +1,3 @@
-import { existsSync } from "node:fs";
-import path from "node:path";
 import type { Metadata, Viewport } from "next";
 import { Chivo_Mono, Jersey_10 } from "next/font/google";
 import { RetroShell } from "@/components/retro/RetroShell";
@@ -37,13 +35,6 @@ export const viewport: Viewport = {
   themeColor: "#020b14",
 };
 
-/**
- * Si el equipo coloca una foto en public/scene/bg.jpg, se usa como fondo del
- * cuarto; si no existe, se dibuja la escena CSS. Se comprueba en el servidor
- * para no pedir un archivo inexistente.
- */
-const SCENE_PHOTO = existsSync(path.join(process.cwd(), "public", "scene", "bg.jpg"));
-
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="es" className={`${display.variable} ${mono.variable}`}>
@@ -51,7 +42,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <noscript>
           <style>{`.screen__boot{display:none}`}</style>
         </noscript>
-        <RetroShell scenePhoto={SCENE_PHOTO}>{children}</RetroShell>
+        <RetroShell>{children}</RetroShell>
       </body>
     </html>
   );

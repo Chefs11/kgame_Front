@@ -7,11 +7,11 @@ import { MonitorFrame } from "./MonitorFrame";
 import { ShellProvider } from "./ShellContext";
 
 /** Composición completa: monitor → escritorio → ventana de la pantalla actual. */
-export function RetroShell({ children, scenePhoto = false }: { children: ReactNode; scenePhoto?: boolean }) {
+export function RetroShell({ children }: { children: ReactNode }) {
   return (
     <GameProvider>
       <ShellProvider>
-        <MonitorFrame photo={scenePhoto}>
+        <MonitorFrame>
           <Desktop>{children}</Desktop>
         </MonitorFrame>
       </ShellProvider>

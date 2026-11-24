@@ -18,7 +18,7 @@ export interface Settings {
 
 export const DEFAULT_SETTINGS: Settings = {
   sound: false,
-  view: "desk",
+  view: "near",
   simple: false,
   motion: "system",
   saveProgress: true,
@@ -31,7 +31,7 @@ export const settingsStore = createLocalStore<Settings>({
     const r = (raw ?? {}) as Partial<Settings>;
     return {
       sound: typeof r.sound === "boolean" ? r.sound : DEFAULT_SETTINGS.sound,
-      view: r.view === "near" ? "near" : "desk",
+      view: r.view === "desk" ? "desk" : "near",
       // `presentation` es el nombre anterior del ajuste (v0.1); se migra a `simple`.
       simple: r.simple === true || (r as { presentation?: boolean }).presentation === true,
       motion: r.motion === "reduce" ? "reduce" : "system",
