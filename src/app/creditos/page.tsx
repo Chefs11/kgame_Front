@@ -85,12 +85,12 @@ export default function Creditos() {
           <tbody>
             <tr>
               <td>Tipografía Jersey 10</td>
-              <td>Google Fonts, autoalojada con next/font</td>
+              <td>Sarah Cadigan-Fried (Google Fonts), autoalojada con next/font</td>
               <td>SIL Open Font License 1.1</td>
             </tr>
             <tr>
               <td>Tipografía Chivo Mono</td>
-              <td>Google Fonts, autoalojada con next/font</td>
+              <td>Omnibus-Type (Google Fonts), autoalojada con next/font</td>
               <td>SIL Open Font License 1.1</td>
             </tr>
             <tr>
@@ -119,8 +119,8 @@ export default function Creditos() {
         </table>
       </div>
       <p className="text-dim text-small">
-        La dirección visual se inspira en la estética de computadoras CRT de los años 90; no se usan textos, páginas
-        ni recursos de otros sitios.
+        La dirección visual se inspira en el portafolio de Milo Varga hecho en Framer, usado como referencia con
+        permiso de su autor. No se usan su fotografía, su nombre ni sus textos.
       </p>
 
       <SectionHeader title="Licencia" />
