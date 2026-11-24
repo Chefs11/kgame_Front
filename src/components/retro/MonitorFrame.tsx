@@ -104,6 +104,7 @@ export function MonitorFrame({ children, photo = false }: { children: ReactNode;
       <RoomScene photo={photo} />
 
       <div className="monitor">
+        <div className="monitor__side" aria-hidden="true" />
         <div className="monitor__case">
           <div className="monitor__bezel">
             <div className="screen">
@@ -196,6 +197,8 @@ export function MonitorFrame({ children, photo = false }: { children: ReactNode;
           </div>
         </div>
         <div className="monitor__neck" aria-hidden="true" />
+        <div className="monitor__base" aria-hidden="true" />
+        <div className="monitor__shadow" aria-hidden="true" />
       </div>
 
     </div>

@@ -71,6 +71,7 @@
 @import "../styles/tokens.css";
 @import "../styles/scene.css";
 @import "../styles/monitor.css";
+@import "../styles/crt.css";
 @import "../styles/desktop.css";
 @import "../styles/window.css";
 @import "../styles/ui.css";

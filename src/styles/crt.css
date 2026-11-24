@@ -1,0 +1,134 @@
+/* ==========================================================
+ * Pantalla CRT: vidrio, contenido, efectos, apagado y encendido
+ * ========================================================== */
+
+/* ---------- Pantalla ---------- */
+.screen {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  overflow: clip;
+  background: radial-gradient(ellipse 80% 70% at 50% 45%, #04121f 0%, var(--color-screen) 70%);
+  border-radius: 28px / 34px; /* curvatura del vidrio */
+  box-shadow: 0 0 30px rgb(255 160 40 / 0.08);
+  container: screen / size;
+  isolation: isolate;
+}
+
+.screen__content {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: clip;
+}
+
+.screen__fx {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+  border-radius: inherit;
+}
+.screen__scanlines {
+  background-image: repeating-linear-gradient(
+    180deg,
+    rgb(0 0 0 / 0.2) 0,
+    rgb(0 0 0 / 0.2) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+}
+.screen__vignette {
+  box-shadow:
+    inset 0 0 70px rgb(0 0 0 / 0.75),
+    inset 0 0 14px rgb(0 0 0 / 0.8);
+}
+.screen__glare {
+  background:
+    linear-gradient(155deg, rgb(255 236 200 / 0.06) 0%, transparent 32%),
+    radial-gradient(ellipse 60% 40% at 25% 8%, rgb(255 230 190 / 0.05), transparent 70%);
+}
+
+.screen__off {
+  position: absolute;
+  inset: 0;
+  z-index: 8;
+  background-color: #030607;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.screen__off-hint {
+  margin: 0;
+  max-width: 36ch;
+  padding: var(--sp-4);
+  text-align: center;
+  font-size: var(--text-ui);
+  color: var(--color-phosphor-dim);
+}
+
+/* Encendido */
+.screen__boot {
+  position: absolute;
+  inset: 0;
+  z-index: 9;
+  background-color: #030607;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.screen__boot-beam {
+  position: absolute;
+  inset: 0;
+  background-color: var(--color-screen);
+  transform-origin: center;
+  animation: crt-on 640ms steps(12, end) both;
+}
+.screen__boot-log {
+  position: relative;
+  z-index: 1;
+  width: min(560px, 88%);
+  font-size: var(--text-ui);
+  color: var(--color-phosphor);
+  line-height: 1.8;
+  opacity: 0;
+  animation: boot-text 200ms linear 540ms both;
+}
+.screen__boot-log p {
+  margin: 0;
+}
+.screen__boot-skip {
+  position: absolute;
+  right: var(--sp-6);
+  bottom: var(--sp-6);
+  z-index: 2;
+}
+.screen__boot[data-short="true"] .screen__boot-log {
+  display: none;
+}
+
+@keyframes crt-on {
+  0% {
+    transform: scale(0, 0.004);
+    filter: brightness(3);
+  }
+  40% {
+    transform: scale(1, 0.004);
+    filter: brightness(3);
+  }
+  100% {
+    transform: scale(1, 1);
+    filter: brightness(1);
+  }
+}
+@keyframes boot-text {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
