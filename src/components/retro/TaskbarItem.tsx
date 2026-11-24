@@ -3,6 +3,7 @@
 import Link from "next/link";
 import type { ComponentPropsWithRef } from "react";
 import { PixelIcon, type PixelIconName } from "./PixelIcon";
+import { useShell } from "./ShellContext";
 
 interface CommonProps {
   icon?: PixelIconName;
@@ -15,9 +16,11 @@ interface CommonProps {
 
 /** Acceso anclado (tecla cuadrada): navega a una pantalla. */
 export function TaskbarLink({ href, icon, label, showLabel, active, className }: CommonProps & { href: string }) {
+  const { rememberOpener } = useShell();
   return (
     <Link
       href={href}
+      onClick={() => rememberOpener(href)}
       className={`task-key ${className ?? ""}`}
       data-active={active || undefined}
       aria-current={active ? "page" : undefined}

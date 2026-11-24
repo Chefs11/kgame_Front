@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import type { ReactNode } from "react";
+import { useEffect, type ReactNode } from "react";
 import { APPS, getScreen } from "@/content/apps";
 import { DesktopIcon } from "./DesktopIcon";
 import { useShell } from "./ShellContext";
@@ -15,7 +15,17 @@ import { Taskbar } from "./Taskbar";
 export function Desktop({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const screen = getScreen(pathname);
-  const { maximized } = useShell();
+  const { maximized, takeFocusReturn } = useShell();
+
+  // Al cerrar una ventana, el foco regresa al icono o acceso que la abrió.
+  useEffect(() => {
+    const href = takeFocusReturn();
+    if (!href) return;
+    const target = document.querySelector<HTMLElement>(
+      `.desk-icon[href="${href}"], .task-key[href="${href}"]`,
+    );
+    target?.focus({ preventScroll: true });
+  }, [pathname, takeFocusReturn]);
   const isHome = screen.id === "inicio";
   // La partida siempre usa todo el escritorio (modo enfoque).
   const focusMode = screen.id === "partida";

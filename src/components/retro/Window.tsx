@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useId, type ReactNode } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { useId, useState, type MouseEvent, type ReactNode } from "react";
 import { getScreen, type Crumb } from "@/content/apps";
 import { PixelIcon, type PixelIconName } from "./PixelIcon";
 import { useShell } from "./ShellContext";
@@ -53,8 +53,23 @@ export function Window({
 }: WindowProps) {
   const pathname = usePathname();
   const screen = getScreen(pathname);
-  const { maximized, toggleMaximized } = useShell();
+  const { maximized, toggleMaximized, requestFocusReturn } = useShell();
+  const router = useRouter();
   const titleId = useId();
+  const [closing, setClosing] = useState(false);
+
+  // Cerrar: estado presionado inmediato, fundido corto y luego se navega.
+  const closeWithFade = (e: MouseEvent<HTMLAnchorElement>) => {
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+    e.preventDefault();
+    if (closing) return;
+    setClosing(true);
+    requestFocusReturn();
+    window.setTimeout(() => {
+      router.push(href);
+      setClosing(false);
+    }, 120);
+  };
 
   const resolvedTitle = title ?? screen.windowTitle;
   const resolvedIcon = icon ?? screen.icon;
@@ -69,6 +84,7 @@ export function Window({
       className={`window window--${variant}`}
       data-active={variant !== "background"}
       data-maximized={variant === "main" && (maximized || !maximizable) ? true : undefined}
+      data-closing={closing || undefined}
       aria-labelledby={titleId}
       role={variant === "dialog" ? "dialog" : undefined}
       aria-modal={variant === "dialog" ? true : undefined}
@@ -97,7 +113,7 @@ export function Window({
                 <PixelIcon name="close" />
               </button>
             ) : (
-              <Link href={href} className="window__btn" aria-label={closeText} title={closeText}>
+              <Link href={href} className="window__btn" aria-label={closeText} title={closeText} onClick={closeWithFade}>
                 <PixelIcon name="close" />
               </Link>
             )}

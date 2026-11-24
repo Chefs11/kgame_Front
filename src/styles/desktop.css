@@ -504,3 +504,9 @@
     height: 44px;
   }
 }
+
+/* Respuesta inmediata al puntero (80–120 ms), sin agrandar */
+.desk-icon__label,
+.task-key {
+  transition: background-color 100ms linear, color 100ms linear;
+}
