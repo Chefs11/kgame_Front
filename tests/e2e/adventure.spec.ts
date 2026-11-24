@@ -156,6 +156,49 @@ test("controles táctiles dentro del cristal en teléfono", async ({ browser }) 
   await ctx.close();
 });
 
+test("con sonido activado no hay errores (música y efectos)", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  const errors = await openAdventure(page);
+  await page.keyboard.press("m");
+  await page.keyboard.down("ArrowRight");
+  await page.keyboard.press("Space");
+  await page.waitForTimeout(600);
+  await page.keyboard.up("ArrowRight");
+  await dbg(page, (d) => d.teleportToBlock(0));
+  await answer(page, true);
+  await page.keyboard.press("m");
+  expect(errors).toEqual([]);
+});
+
+test("al volver a entrar, los bloques respondidos aparecen usados", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("/");
+  await page.evaluate(() => localStorage.removeItem("kgame.adventure.v1"));
+  await openAdventure(page, "u3");
+  await dbg(page, (d) => d.teleportToBlock(2));
+  await answer(page, true);
+  await page.reload();
+  await page.waitForFunction(() => document.querySelector(".adventure")?.getAttribute("data-status") === "playing");
+  expect(await dbg(page, (d) => d.world.answered)).toBe(1);
+  await expect(page.locator(".adventure__counter")).toContainText("1/8");
+});
+
+test("con movimiento reducido no hay parallax ni destellos y todo sigue jugable", async ({ browser }) => {
+  const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion: "reduce" });
+  const page = await ctx.newPage();
+  await openAdventure(page);
+  const reduced = await page.locator(".adventure").getAttribute("data-reduced");
+  expect(reduced).toBe("true");
+  await dbg(page, (d) => d.teleportToBlock(0));
+  await answer(page, false);
+  const particles = await page.evaluate(() => {
+    const w = (window as unknown as { __ADVENTURE__: { world: { plife: Float32Array } } }).__ADVENTURE__.world;
+    return Array.from(w.plife).filter((v) => v > 0).length;
+  });
+  expect(particles).toBe(0);
+  await ctx.close();
+});
+
 test("rendimiento: ~60 fps mientras corre", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await openAdventure(page);
