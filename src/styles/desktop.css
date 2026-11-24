@@ -466,6 +466,10 @@
   .hero__actions {
     justify-content: center;
   }
+  .hero__name {
+    font-size: clamp(3.25rem, 19cqi, 5.5rem);
+    line-height: 0.85;
+  }
   .taskbar {
     padding: 0 8px;
     gap: 6px;
