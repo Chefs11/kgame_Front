@@ -15,8 +15,10 @@
 /* Foto opcional del equipo: public/scene/bg.jpg */
 .scene__photo {
   position: absolute;
-  inset: 0;
-  background: url("/scene/bg.jpg") center / cover no-repeat;
+  inset: -12px; /* margen para que el desenfoque no deje bordes claros */
+  background: url("/scene/bg.jpg") center 60% / cover no-repeat;
+  /* Profundidad de campo y tono más cálido y tenue para que el monitor resalte (estático) */
+  filter: blur(1.6px) brightness(0.82) saturate(1.08) sepia(0.12);
 }
 
 /* Pared: penumbra a la izquierda, luz de tarde a la derecha */

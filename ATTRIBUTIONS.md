@@ -26,10 +26,11 @@ Alternativas locales si no cargan: `Courier New` / `monospace` y `ui-monospace`,
 - **Iconos pixelados:** diseño propio del equipo, dibujados como rejillas de 16×16 en
   `src/components/retro/PixelIcon.tsx` (no se basan en paquetes de iconos de terceros). Licencia: la
   del proyecto (pendiente de definir por el equipo).
-- **Cuarto, monitor y efectos CRT:** dibujados con CSS y SVG en línea (`src/styles/scene.css`,
-  `monitor.css`, `crt.css`); el grano es ruido SVG generado (`feTurbulence`). No se usan fotografías
-  ni imágenes externas. Si el equipo agrega `public/scene/bg.jpg`, debe registrar aquí su autor,
-  fuente y licencia.
+- **Monitor y efectos CRT:** dibujados con CSS y SVG en línea (`monitor.css`, `crt.css`); el grano es
+  ruido SVG generado (`feTurbulence`).
+- **Fondo del cuarto:** `public/scene/bg.jpg` (archivo `fondo_desk.jpeg`, 1427×736 px), proporcionado
+  por el equipo. Autor: **[pendiente]**. Origen: **[pendiente]**. Licencia: **[pendiente]**. Si se
+  elimina, se usa la escena alternativa hecha solo con CSS (`src/styles/scene.css`).
 - **Sonidos:** tonos generados en el navegador con Web Audio; no hay archivos de audio.
 
 ## Diseño de referencia
