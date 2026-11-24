@@ -23,13 +23,13 @@ export function DesktopHero() {
         {SITE.gameName}
       </h1>
       <div className="hero__actions">
-        <ButtonLink href="/jugar" size="lg" icon="play">
+        <ButtonLink href="/jugar" icon="play">
           Jugar
         </ButtonLink>
-        <ButtonLink href="/unidades" size="lg" variant="secondary" icon="folder">
+        <ButtonLink href="/unidades" variant="secondary" icon="folder">
           Elegir unidad
         </ButtonLink>
-        <ButtonLink href="/reglas" size="lg" variant="secondary" icon="rules">
+        <ButtonLink href="/reglas" variant="secondary" icon="rules">
           Ver reglas
         </ButtonLink>
       </div>

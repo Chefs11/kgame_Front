@@ -115,6 +115,8 @@ export function MonitorFrame({ children, photo = false }: { children: ReactNode;
               <div className="screen__fx screen__scanlines" aria-hidden="true" />
               <div className="screen__fx screen__vignette" aria-hidden="true" />
               <div className="screen__fx screen__glare" aria-hidden="true" />
+              <div className="screen__fx screen__reflection" aria-hidden="true" />
+              <div className="screen__fx screen__flicker" aria-hidden="true" />
 
               {phase === "off" && (
                 <div className="screen__off">
