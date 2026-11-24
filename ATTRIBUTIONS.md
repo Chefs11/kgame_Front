@@ -26,16 +26,17 @@ Alternativas locales si no cargan: `Courier New` / `monospace` y `ui-monospace`,
 - **Iconos pixelados:** diseño propio del equipo, dibujados como rejillas de 16×16 en
   `src/components/retro/PixelIcon.tsx` (no se basan en paquetes de iconos de terceros). Licencia: la
   del proyecto (pendiente de definir por el equipo).
-- **Monitor y efectos CRT:** dibujados con CSS y SVG en línea (`monitor.css`, `crt.css`); el grano es
-  ruido SVG generado (`feTurbulence`).
-- **Fondo del cuarto:** `public/scene/bg.jpg` (archivo original `fondo_desk.jpeg`, 1427×736 px).
+- **Efectos de vidrio y pantalla:** hechos con CSS (`monitor.css`, `crt.css`) a partir de la misma foto;
+  el cursor pixel es SVG propio.
+- **Foto del monitor y del cuarto:** `public/scene/room-monitor-src.jpg` (archivo original
+  `monitor.jpeg`, 1376×768 px) y sus derivados `room-monitor.webp` (1920 px), `room-monitor@2x.webp`
+  (3840 px, reescalado) y `room-monitor-ambient.webp` (64 px, relleno ambiental).
   - Autoría: imagen **generada con inteligencia artificial (Google Gemini)** a petición del equipo.
   - Licencia: no proviene de un banco de imágenes ni de otra persona; su uso se rige por los términos
     de servicio de Google Gemini vigentes al generarla, que el equipo debe conservar y revisar.
   - Nota: el art. 12 de la Ley Federal del Derecho de Autor define al autor como «la persona física
     que ha creado una obra»; si una imagen generada por IA tiene o no protección por derecho de autor
     es una cuestión que el equipo docente debe revisar. Se declara aquí por transparencia.
-  - Si se elimina, se usa la escena alternativa hecha solo con CSS (`src/styles/scene.css`).
 - **Sonidos:** tonos generados en el navegador con Web Audio; no hay archivos de audio.
 
 ## Diseño de referencia

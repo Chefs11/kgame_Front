@@ -107,8 +107,8 @@ export default function Creditos() {
               <td>No usa archivos de audio de terceros</td>
             </tr>
             <tr>
-              <td>Fondo del cuarto (public/scene/bg.jpg)</td>
-              <td>Imagen generada con inteligencia artificial (Google Gemini) por el equipo; el monitor se dibuja con CSS</td>
+              <td>Foto del monitor y del cuarto (public/scene/room-monitor*)</td>
+              <td>Imagen generada con inteligencia artificial (Google Gemini) por el equipo</td>
               <td>Sujeta a los términos de servicio de Google Gemini (ver ATTRIBUTIONS.md)</td>
             </tr>
             <tr>

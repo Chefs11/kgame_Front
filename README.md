@@ -63,18 +63,31 @@ src/
                           tokens.css (alias semánticos de los tokens de Tailwind)
 ```
 
-## Escena y monitor
+## Monitor fotográfico
 
-- La escena del cuarto (`src/components/retro/RoomScene.tsx`, `src/styles/scene.css`) está hecha solo
-  con CSS: luz de ventana con persiana, lámpara, estantería, planta, torre y escritorio, con desenfoque
-  estático, grano SVG y viñeta.
-- **Foto opcional:** si colocas `public/scene/bg.jpg`, el layout la detecta en el servidor y la usa
-  como fondo en lugar de la escena CSS (vuelve a compilar o reinicia `npm run dev`). Registra su autor
-  y licencia en `ATTRIBUTIONS.md`.
-- El monitor (`src/styles/monitor.css`) se dimensiona por la altura (≈88 % del viewport); solo la
-  carcasa tiene perspectiva 3D, la pantalla queda plana para que el texto sea nítido.
-- Efectos CRT en `src/styles/crt.css`. El parpadeo solo anima la opacidad de una capa propia;
-  medido a 60 fps con desplazamiento continuo y todos los efectos activos.
+El juego se muestra sobre el vidrio de una **foto real** de un monitor CRT en un cuarto
+(`public/scene/room-monitor*.webp`). El componente es `src/components/retro/MonitorFrame.tsx`.
+
+- **Calibración:** toda la alineación sale de `src/lib/monitor-config.ts`, en porcentajes del lienzo
+  de la foto: caja y contorno del vidrio (`glassClip` / `stageClip`), encuadres de cámara, botón de
+  encendido, LED, ranura, etiqueta y ángulo de la luz. Para usar una foto de mayor resolución **con el
+  mismo encuadre**, reemplaza los archivos WebP y no hace falta recalibrar. Si cambia el encuadre, se
+  vuelve a medir el vidrio (umbral de luminancia sobre el vidrio oscuro).
+- **Stage:** foto, pantalla y capas viven en un mismo contenedor que se mueve solo con `transform`.
+  La vista cercana es el estado sin escalar, para que el texto del juego quede nítido; la vista de
+  sala aleja toda la escena.
+- **Capas de vidrio** (variables CSS en `.room`): `--glass-reflect` (reflejos reales de la foto con
+  `screen`), `--glass-shade` (sombra del bisel con `multiply`, solo en las orillas) y `--spill`
+  (derrame de luz ámbar sobre el bisel y el escritorio). Todas con `pointer-events: none`.
+- **Movimiento:** el arranque ocurre una vez por sesión (`sessionStorage`) y dura menos de 1.5 s, con
+  zoom de sala a pantalla y botón «Omitir». El botón de la foto apaga y enciende el monitor (colapso
+  CRT) sin desmontar el juego. Las ventanas entran 6 px con fundido (180 ms) y salen con fundido
+  (120 ms), y el foco regresa al icono que las abrió. Hay parallax de ±1.5° en la vista de sala con
+  mouse.
+- **Efectos reducidos** (panel izquierdo o `prefers-reduced-motion`): sin zoom de entrada ni
+  parallax, y los encendidos son fundidos cortos. **Modo simple** quita las capas de vidrio.
+- **Teléfono (< 768 px):** el vidrio mediría ~370 × 260 px, así que se oculta la foto y el juego
+  ocupa toda la pantalla.
 
 ## Sistema de diseño
 
