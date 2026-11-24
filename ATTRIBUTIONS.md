@@ -28,9 +28,14 @@ Alternativas locales si no cargan: `Courier New` / `monospace` y `ui-monospace`,
   del proyecto (pendiente de definir por el equipo).
 - **Monitor y efectos CRT:** dibujados con CSS y SVG en línea (`monitor.css`, `crt.css`); el grano es
   ruido SVG generado (`feTurbulence`).
-- **Fondo del cuarto:** `public/scene/bg.jpg` (archivo `fondo_desk.jpeg`, 1427×736 px), proporcionado
-  por el equipo. Autor: **[pendiente]**. Origen: **[pendiente]**. Licencia: **[pendiente]**. Si se
-  elimina, se usa la escena alternativa hecha solo con CSS (`src/styles/scene.css`).
+- **Fondo del cuarto:** `public/scene/bg.jpg` (archivo original `fondo_desk.jpeg`, 1427×736 px).
+  - Autoría: imagen **generada con inteligencia artificial (Google Gemini)** a petición del equipo.
+  - Licencia: no proviene de un banco de imágenes ni de otra persona; su uso se rige por los términos
+    de servicio de Google Gemini vigentes al generarla, que el equipo debe conservar y revisar.
+  - Nota: el art. 12 de la Ley Federal del Derecho de Autor define al autor como «la persona física
+    que ha creado una obra»; si una imagen generada por IA tiene o no protección por derecho de autor
+    es una cuestión que el equipo docente debe revisar. Se declara aquí por transparencia.
+  - Si se elimina, se usa la escena alternativa hecha solo con CSS (`src/styles/scene.css`).
 - **Sonidos:** tonos generados en el navegador con Web Audio; no hay archivos de audio.
 
 ## Diseño de referencia
