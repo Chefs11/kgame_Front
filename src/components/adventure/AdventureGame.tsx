@@ -305,6 +305,19 @@ export function AdventureGame({ unitId }: { unitId: UnitId }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [unitId]);
 
+  // En pausa, Esc o P continúan (el motor no recibe teclas mientras está en pausa)
+  useEffect(() => {
+    if (status !== "paused") return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.code === "Escape" || e.code === "KeyP") {
+        e.preventDefault();
+        resume();
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [status, resume]);
+
   // Música en pausa cuando la pestaña se oculta
   useEffect(() => {
     const onVis = () => {

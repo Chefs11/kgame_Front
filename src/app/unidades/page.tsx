@@ -13,7 +13,7 @@ export default function Unidades() {
     <Window status={`${UNITS.length} unidades`} statusEnd={`${QUESTIONS.length} retos de demostración`}>
       <ScreenHeader
         title="Unidades"
-        subtitle="Practica los temas de una unidad o juega una partida mixta con retos de las cuatro."
+        subtitle="Elige una unidad y un modo: Aventura (recorre el bosque y toca los ?) o Clásico (los retos uno tras otro, sin plataformas)."
       />
 
       <div className="panel-grid">
@@ -35,9 +35,18 @@ export default function Unidades() {
                   <li key={t}>{t}</li>
                 ))}
               </ul>
-              <div className="unit-card__footer">
-                <ButtonLink href={`/jugar?unidad=${u.id}`} size="sm" icon="play">
-                  Jugar Unidad {u.numeral}
+              <div className="unit-card__footer btn-row">
+                <ButtonLink href={`/aventura?unidad=${u.id}`} size="sm" icon="play" aria-label={`Modo aventura, Unidad ${u.numeral}`}>
+                  Aventura
+                </ButtonLink>
+                <ButtonLink
+                  href={`/jugar?unidad=${u.id}`}
+                  size="sm"
+                  variant="secondary"
+                  icon="rules"
+                  aria-label={`Modo clásico, Unidad ${u.numeral}`}
+                >
+                  Clásico
                 </ButtonLink>
               </div>
             </article>
@@ -53,7 +62,7 @@ export default function Unidades() {
           </p>
           <div className="unit-card__footer">
             <ButtonLink href="/jugar?unidad=mixta" size="sm" icon="play">
-              Jugar mixta
+              Jugar mixta (clásico)
             </ButtonLink>
           </div>
         </article>

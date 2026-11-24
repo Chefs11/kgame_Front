@@ -54,6 +54,10 @@ export function GameResults() {
   const multi = result.config.players > 1;
 
   const playAgain = () => {
+    if (result.variant === "aventura" && result.config.unit !== "mixta") {
+      router.push(`/aventura?unidad=${result.config.unit}&r=${Date.now().toString(36)}`);
+      return;
+    }
     game.start(result.config);
     router.push("/jugar/partida");
   };
