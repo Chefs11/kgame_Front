@@ -3,7 +3,6 @@
 import {
   useCallback,
   useEffect,
-  useRef,
   useState,
   useSyncExternalStore,
   type CSSProperties,
@@ -107,7 +106,6 @@ export function MonitorFrame({ children }: { children: ReactNode }) {
   const [powerPhase, setPowerPhase] = useState<Phase | null>(null);
   /** Durante el arranque la cámara empieza en la sala y luego se acerca. */
   const [introCamera, setIntroCamera] = useState<"room" | null>("room");
-  const stageRef = useRef<HTMLDivElement>(null);
 
   const phase: Phase =
     powerPhase ?? (boot.booted === null ? "pending" : boot.booted === false ? "intro" : "on");
@@ -161,33 +159,6 @@ export function MonitorFrame({ children }: { children: ReactNode }) {
     return () => window.clearTimeout(t);
   }, [phase, reduceMotion]);
 
-  // Parallax sutil con el puntero: solo escritorio, puntero fino, vista de sala y sin movimiento reducido.
-  const parallaxOn = !mobile && !reduceMotion && settings.view === "desk" && phase === "on";
-  useEffect(() => {
-    const el = stageRef.current;
-    if (!el) return;
-    if (!parallaxOn || !window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
-      el.style.setProperty("--tilt-x", "0deg");
-      el.style.setProperty("--tilt-y", "0deg");
-      return;
-    }
-    let frame = 0;
-    const onMove = (e: PointerEvent) => {
-      cancelAnimationFrame(frame);
-      frame = requestAnimationFrame(() => {
-        const nx = e.clientX / window.innerWidth - 0.5;
-        const ny = e.clientY / window.innerHeight - 0.5;
-        el.style.setProperty("--tilt-y", `${(nx * 3).toFixed(3)}deg`); // ±1.5°
-        el.style.setProperty("--tilt-x", `${(-ny * 3).toFixed(3)}deg`);
-      });
-    };
-    window.addEventListener("pointermove", onMove);
-    return () => {
-      cancelAnimationFrame(frame);
-      window.removeEventListener("pointermove", onMove);
-    };
-  }, [parallaxOn]);
-
   const togglePower = () => {
     if (phase === "on" || phase === "intro" || phase === "powering-on") {
       if (phase === "intro") finishIntro();
@@ -240,7 +211,7 @@ export function MonitorFrame({ children }: { children: ReactNode }) {
       data-ready={measured}
       data-anim={animReady}
     >
-      <div className="stage" ref={stageRef} style={stageStyle}>
+      <div className="stage" style={stageStyle}>
         {/* Foto real del cuarto y el monitor (decorativa) */}
         {/* eslint-disable-next-line @next/next/no-img-element -- WebP 1x/2x generados a mano con srcset; next/image reescalaría la calibración */}
         <img

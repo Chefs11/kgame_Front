@@ -82,10 +82,9 @@ El juego se muestra sobre el vidrio de una **foto real** de un monitor CRT en un
 - **Movimiento:** el arranque ocurre una vez por sesión (`sessionStorage`) y dura menos de 1.5 s, con
   zoom de sala a pantalla y botón «Omitir». El botón de la foto apaga y enciende el monitor (colapso
   CRT) sin desmontar el juego. Las ventanas entran 6 px con fundido (180 ms) y salen con fundido
-  (120 ms), y el foco regresa al icono que las abrió. Hay parallax de ±1.5° en la vista de sala con
-  mouse.
-- **Efectos reducidos** (panel izquierdo o `prefers-reduced-motion`): sin zoom de entrada ni
-  parallax, y los encendidos son fundidos cortos. **Modo simple** quita las capas de vidrio.
+  (120 ms), y el foco regresa al icono que las abrió. La escena no se inclina con el mouse: es
+  estática.
+- **Efectos reducidos** (panel izquierdo o `prefers-reduced-motion`): sin zoom de entrada, y los encendidos son fundidos cortos. **Modo simple** quita las capas de vidrio.
 - **Teléfono (< 768 px):** el vidrio mediría ~370 × 260 px, así que se oculta la foto y el juego
   ocupa toda la pantalla.
 

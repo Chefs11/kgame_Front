@@ -17,7 +17,6 @@
   overflow: hidden;
   overflow: clip;
   background-color: #0d0b09; /* fondo oscuro limpio mientras carga la foto */
-  perspective: 2400px;
 }
 /* Relleno ambiental cuando la foto no cubre el viewport (tablet vertical):
  * una versión de 64 px de la misma foto, ampliada por el navegador (sin filtros). */
@@ -43,9 +42,9 @@
 .room[data-anim="true"] .stage {
   transition: transform var(--cam-ms) cubic-bezier(0.65, 0, 0.35, 1), opacity 200ms ease-out;
 }
-/* Vista de sala: se aleja toda la escena; parallax sutil con el puntero */
+/* Vista de sala: se aleja toda la escena (sin inclinación: la escena es estática) */
 .room[data-view="desk"] .stage {
-  transform: scale(var(--room-scale, 0.6)) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+  transform: scale(var(--room-scale, 0.6));
 }
 .room[data-view="desk"][data-anim="true"] .stage {
   transition:
