@@ -6,6 +6,7 @@ import { bootServerSnapshot, bootStore, updateSettings, useSettings } from "@/li
 import { playSound } from "@/lib/sound";
 import { useReducedMotion } from "@/lib/use-reduced-motion";
 import { PixelIcon, type PixelIconName } from "./PixelIcon";
+import { RoomScene } from "./RoomScene";
 
 type Phase = "pending" | "booting" | "booting-short" | "on" | "off";
 
@@ -46,7 +47,7 @@ function DockButton({
  * Marco reutilizable: cuarto con luz cálida, monitor CRT beige, pantalla con
  * efectos sutiles, botón de encendido con LED y panel de vista.
  */
-export function MonitorFrame({ children }: { children: ReactNode }) {
+export function MonitorFrame({ children, photo = false }: { children: ReactNode; photo?: boolean }) {
   const settings = useSettings();
   const reduceMotion = useReducedMotion();
   const boot = useSyncExternalStore(bootStore.subscribe, bootStore.get, () => bootServerSnapshot);
@@ -100,19 +101,7 @@ export function MonitorFrame({ children }: { children: ReactNode }) {
       data-motion={settings.motion}
       data-power={power ? "on" : "off"}
     >
-      {/* Escena del cuarto: decorativa */}
-      <div className="room__scene" aria-hidden="true">
-        <div className="room__sun" />
-        <div className="room__shelf">
-          <span className="room__book" />
-          <span className="room__book room__book--tall" />
-          <span className="room__book room__book--lean" />
-        </div>
-        <div className="room__frame" />
-        <div className="room__lamp" />
-        <div className="room__desk" />
-        <div className="room__plant" />
-      </div>
+      <RoomScene photo={photo} />
 
       <div className="monitor">
         <div className="monitor__case">

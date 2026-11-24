@@ -69,6 +69,7 @@
 }
 
 @import "../styles/tokens.css";
+@import "../styles/scene.css";
 @import "../styles/monitor.css";
 @import "../styles/desktop.css";
 @import "../styles/window.css";
