@@ -27,13 +27,15 @@ export function Desktop({ children }: { children: ReactNode }) {
     target?.focus({ preventScroll: true });
   }, [pathname, takeFocusReturn]);
   const isHome = screen.id === "inicio";
+  // Modo aventura: el juego ocupa todo el cristal (sin iconos ni barra de tareas).
+  const isGame = screen.id === "jugar";
   // La partida siempre usa todo el escritorio (modo enfoque).
   const focusMode = screen.id === "partida";
   const fill = !isHome && (maximized || focusMode);
   const showBackground = !isHome && !fill;
 
   return (
-    <div className="desktop" data-mode={isHome ? "home" : "window"} data-maximized={fill}>
+    <div className="desktop" data-mode={isGame ? "game" : isHome ? "home" : "window"} data-maximized={fill}>
       <div className="desktop__main">
         <nav aria-label="Iconos del escritorio" className="desktop__nav">
           <ul className="desktop__icons">

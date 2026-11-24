@@ -55,6 +55,8 @@ export interface GameResult {
   finishedAt: string;
   config: GameConfig;
   answers: AnswerRecord[];
+  /** Modo de juego. Opcional para leer partidas guardadas antes del Modo aventura (= clásico). */
+  variant?: "clasico" | "aventura";
 }
 
 /* ---------- Puntaje ---------- */
@@ -71,6 +73,14 @@ export const QUALITY_FACTOR: Record<OptionQuality, number> = {
   parcial: 0.5,
   riesgosa: 0,
 };
+
+/** Duración por defecto de una sesión (retos); el Modo aventura usa la misma regla. */
+export const DEFAULT_SESSION_LENGTH = 8;
+
+/** Número de retos de una sesión de `unit` con la duración por defecto. */
+export function sessionLength(unit: UnitChoice): number {
+  return Math.min(DEFAULT_SESSION_LENGTH, availableQuestions(unit, "todas").length);
+}
 
 export const LENGTH_OPTIONS = [
   { value: 4, label: "Rápida", desc: "4 retos, unos 5 minutos" },

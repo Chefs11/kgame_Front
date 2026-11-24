@@ -1,0 +1,155 @@
+{
+  "generatedBy": "scripts/build-adventure-assets.ts",
+  "sprites": {
+    "image": "/adventure/sprout.png",
+    "cell": {
+      "w": 20,
+      "h": 26
+    },
+    "pivot": {
+      "x": 10,
+      "y": 25
+    },
+    "frames": {
+      "idle": {
+        "x": 0,
+        "y": 0,
+        "w": 20,
+        "h": 26
+      },
+      "blink": {
+        "x": 20,
+        "y": 0,
+        "w": 20,
+        "h": 26
+      },
+      "runA": {
+        "x": 40,
+        "y": 0,
+        "w": 20,
+        "h": 26
+      },
+      "runB": {
+        "x": 60,
+        "y": 0,
+        "w": 20,
+        "h": 26
+      },
+      "runC": {
+        "x": 80,
+        "y": 0,
+        "w": 20,
+        "h": 26
+      },
+      "jump": {
+        "x": 100,
+        "y": 0,
+        "w": 20,
+        "h": 26
+      },
+      "crouch": {
+        "x": 120,
+        "y": 0,
+        "w": 20,
+        "h": 26
+      },
+      "oops": {
+        "x": 140,
+        "y": 0,
+        "w": 20,
+        "h": 26
+      }
+    },
+    "animations": {
+      "idle": [
+        "idle"
+      ],
+      "blink": [
+        "blink"
+      ],
+      "run": [
+        "runA",
+        "runB",
+        "runC",
+        "runB"
+      ],
+      "jump": [
+        "jump"
+      ],
+      "fall": [
+        "jump"
+      ],
+      "crouch": [
+        "crouch"
+      ],
+      "oops": [
+        "oops"
+      ]
+    }
+  },
+  "tiles": {
+    "image": "/adventure/tiles.png",
+    "tile": 16,
+    "rects": {
+      "groundTop": {
+        "x": 0,
+        "y": 0,
+        "w": 16,
+        "h": 16
+      },
+      "dirt": {
+        "x": 16,
+        "y": 0,
+        "w": 16,
+        "h": 16
+      },
+      "brick": {
+        "x": 32,
+        "y": 0,
+        "w": 16,
+        "h": 16
+      },
+      "qOrange": {
+        "x": 48,
+        "y": 0,
+        "w": 16,
+        "h": 16
+      },
+      "qBlue": {
+        "x": 64,
+        "y": 0,
+        "w": 16,
+        "h": 16
+      },
+      "used": {
+        "x": 80,
+        "y": 0,
+        "w": 16,
+        "h": 16
+      },
+      "platform": {
+        "x": 96,
+        "y": 0,
+        "w": 16,
+        "h": 16
+      },
+      "exitClosed": {
+        "x": 0,
+        "y": 16,
+        "w": 48,
+        "h": 32
+      },
+      "exitOpen": {
+        "x": 48,
+        "y": 16,
+        "w": 48,
+        "h": 32
+      }
+    },
+    "background": {
+      "image": "/adventure/forest-bg.png",
+      "w": 300,
+      "h": 240
+    }
+  }
+}

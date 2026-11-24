@@ -1,0 +1,280 @@
+/* ==========================================================
+ * Modo aventura: canvas pixelado, HUD, menús y controles táctiles.
+ * Vive dentro del cristal del monitor (.screen) sin tocar su calibración.
+ * ========================================================== */
+
+.adventure {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #020b14;
+  font-family: var(--font-mono);
+}
+.adventure__stage {
+  position: absolute;
+  inset: 0;
+}
+.adventure__canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  outline: none;
+  touch-action: none;
+}
+.adventure__canvas:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: -4px;
+}
+
+/* Mientras se juega: halo ámbar atenuado para que el verde del bosque no se ensucie */
+.screen__content:has(.adventure) {
+  text-shadow: none;
+}
+.room:has(.adventure) {
+  --glass-reflect: 0.42;
+}
+
+/* ---------- HUD ---------- */
+.adventure__hud {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  /* margen seguro: las esquinas del vidrio son curvas */
+  padding: clamp(10px, 3.4cqh, 28px) clamp(14px, 4.2cqw, 40px);
+  pointer-events: none;
+}
+.adventure__counter,
+.adventure__score {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 4.6cqh, 2.4rem);
+  line-height: 1;
+  color: var(--color-phosphor);
+  background: rgb(2 11 20 / 0.72);
+  border: 1.5px solid var(--color-phosphor);
+  padding: 4px 10px 2px;
+  text-shadow: 0 0 6px rgb(255 182 72 / 0.4);
+}
+.adventure__hud-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.adventure__hud-btn {
+  pointer-events: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  color: var(--color-phosphor);
+  background: rgb(2 11 20 / 0.72);
+  border: 1.5px solid var(--color-phosphor);
+  box-shadow: var(--shadow-key-sm);
+  cursor: pointer;
+}
+.adventure__hud-btn svg {
+  width: 22px;
+  height: 22px;
+}
+.adventure__hud-btn:hover {
+  background: rgb(40 28 8 / 0.85);
+}
+.adventure__hud-btn:active,
+.adventure__hud-btn[aria-pressed="true"] {
+  transform: translate(2px, 2px);
+  box-shadow: none;
+}
+.adventure__hud-btn:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: 3px;
+}
+
+.adventure__toast {
+  position: absolute;
+  left: 50%;
+  top: clamp(56px, 13cqh, 96px);
+  transform: translateX(-50%);
+  margin: 0;
+  padding: 8px 14px;
+  font-size: var(--text-ui);
+  font-weight: 700;
+  color: var(--color-phosphor);
+  background: rgb(2 11 20 / 0.85);
+  border: 1.5px solid var(--color-phosphor);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+/* ---------- Banner y carga ---------- */
+.adventure__banner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 16px;
+  text-align: center;
+  background: rgb(2 11 20 / 0.55);
+  pointer-events: none;
+}
+.adventure__banner-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 8cqh, 3.6rem);
+  line-height: 1;
+  color: var(--color-phosphor);
+  text-shadow: var(--glow-display);
+}
+.adventure__banner-hint,
+.adventure__banner-sound {
+  margin: 0;
+  font-size: var(--text-ui);
+  color: var(--color-phosphor-bright);
+  background: rgb(2 11 20 / 0.7);
+  padding: 4px 10px;
+}
+.adventure__banner-sound {
+  color: var(--color-phosphor-dim);
+}
+.adventure__loading {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: var(--color-phosphor);
+  font-family: var(--font-display);
+  font-size: 2rem;
+  background: #020b14;
+}
+
+/* ---------- Overlays (pregunta, pausa, resumen) ---------- */
+.adventure__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: clamp(10px, 3cqh, 28px) clamp(10px, 3cqw, 28px);
+  overflow: auto;
+  background: rgb(2 11 20 / 0.55);
+  overscroll-behavior: contain;
+}
+.adventure__panel {
+  width: min(100%, 860px);
+  margin: auto 0;
+  padding: clamp(16px, 3cqh, 28px) clamp(16px, 3cqw, 32px);
+  color: var(--color-phosphor);
+  background: var(--color-screen);
+  border: 1.5px solid var(--color-phosphor);
+  box-shadow: var(--shadow-window);
+}
+.adventure__panel--question {
+  margin: 0;
+}
+.adventure__panel--menu {
+  width: min(100%, 460px);
+}
+.adventure__title {
+  margin: 0 0 14px;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--text-display-md);
+  line-height: 0.95;
+  color: var(--color-phosphor);
+  text-shadow: var(--glow-display);
+}
+.adventure__menu {
+  display: grid;
+  gap: 12px;
+  margin-top: 12px;
+}
+.adventure__menu > .btn {
+  justify-content: flex-start;
+}
+.adventure__menu-hint {
+  margin: 14px 0 0;
+  font-size: var(--text-meta);
+  color: var(--color-phosphor-dim);
+}
+.adventure__bonus {
+  margin: 0 0 12px;
+  padding: 6px 12px;
+  border: 1.5px solid #8fd3ff;
+  color: #bfe7ff;
+  font-weight: 700;
+  font-size: var(--text-ui);
+}
+.adventure__summary-score {
+  margin: 0 0 6px;
+  font-family: var(--font-display);
+  font-size: var(--text-display-lg);
+  line-height: 0.9;
+  color: var(--color-phosphor);
+}
+.adventure__summary-score span {
+  font-size: 0.45em;
+  color: var(--color-phosphor-dim);
+}
+
+/* ---------- Controles táctiles (dentro del cristal, esquinas inferiores) ---------- */
+.adventure__touch {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 12px;
+  pointer-events: none;
+}
+.adventure__dpad {
+  display: flex;
+  gap: 8px;
+}
+.adventure__pad {
+  pointer-events: auto;
+  width: clamp(56px, 16cqmin, 84px);
+  height: clamp(56px, 16cqmin, 84px);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--color-phosphor);
+  background: rgb(2 11 20 / 0.45);
+  border: 2px solid rgb(255 182 72 / 0.7);
+  border-radius: 14px;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.adventure__pad:active {
+  background: rgb(255 182 72 / 0.3);
+}
+.adventure__pad--jump {
+  width: clamp(76px, 22cqmin, 112px);
+  height: clamp(76px, 22cqmin, 112px);
+  border-radius: 50%;
+  font-size: 1rem;
+}
+
+/* Teléfono vertical: el canvas queda arriba y los controles en el espacio libre de abajo */
+@media (max-width: 767px) and (orientation: portrait) {
+  .adventure__stage {
+    bottom: auto;
+    height: min(100%, calc(100vw * 224 / 320));
+  }
+  .adventure__touch {
+    position: fixed;
+    bottom: 18px;
+  }
+}

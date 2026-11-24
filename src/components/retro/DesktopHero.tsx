@@ -24,7 +24,7 @@ export function DesktopHero() {
         {GAME_NAME}
       </h1>
       <div className="hero__actions">
-        <ButtonLink href="/jugar" icon="play">
+        <ButtonLink href="/aventura" icon="play">
           Jugar
         </ButtonLink>
         <ButtonLink href="/unidades" variant="secondary" icon="folder">

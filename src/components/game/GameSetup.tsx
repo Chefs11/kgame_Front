@@ -5,6 +5,7 @@ import { useState, type ReactNode } from "react";
 import { UNITS } from "@/content/units";
 import {
   availableQuestions,
+  DEFAULT_SESSION_LENGTH,
   LENGTH_OPTIONS,
   TIMER_OPTIONS,
   type DifficultyChoice,
@@ -74,7 +75,7 @@ export function GameSetup({ initialUnit = "mixta" }: { initialUnit?: UnitChoice 
   const settings = useSettings();
 
   const [unit, setUnit] = useState<UnitChoice>(initialUnit);
-  const [length, setLength] = useState<number>(8);
+  const [length, setLength] = useState<number>(DEFAULT_SESSION_LENGTH);
   const [difficulty, setDifficulty] = useState<DifficultyChoice>("todas");
   const [mode, setMode] = useState<GameMode>("individual");
   const [players, setPlayers] = useState(2);

@@ -18,7 +18,7 @@ export interface AppEntry {
 
 export const APPS: AppEntry[] = [
   { id: "inicio", label: "Inicio", href: "/", icon: "home", windowTitle: "Escritorio", pinPriority: 1 },
-  { id: "jugar", label: "Jugar", href: "/jugar", icon: "play", windowTitle: "Nueva partida", pinPriority: 2 },
+  { id: "jugar", label: "Jugar", href: "/aventura", icon: "play", windowTitle: "Modo aventura", pinPriority: 2 },
   { id: "unidades", label: "Unidades", href: "/unidades", icon: "folder", windowTitle: "Unidades", pinPriority: 4 },
   { id: "reglas", label: "Reglas", href: "/reglas", icon: "rules", windowTitle: "Reglas", pinPriority: 5 },
   { id: "progreso", label: "Progreso", href: "/progreso", icon: "floppy", windowTitle: "Progreso", pinPriority: 3 },
@@ -48,6 +48,15 @@ export interface ScreenInfo {
 const DESKTOP: Crumb = { label: "Escritorio", href: "/" };
 
 const EXTRA_SCREENS: ScreenInfo[] = [
+  {
+    id: "clasico",
+    href: "/jugar",
+    icon: "play",
+    windowTitle: "Nueva partida (modo clásico)",
+    crumbs: [DESKTOP, { label: "Jugar" }],
+    parentHref: "/",
+    appId: "jugar",
+  },
   {
     id: "partida",
     href: "/jugar/partida",

@@ -3,56 +3,25 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { QUESTION_BY_ID } from "@/content/questions";
-import { CONDUCT_LABEL, DIFFICULTY_LABEL, KIND_LABEL, UNIT_BY_ID } from "@/content/units";
-import type { Question } from "@/content/types";
-import { scoreAnswer, type AnswerRecord, type GameSession } from "@/lib/game-engine";
+import { DIFFICULTY_LABEL, KIND_LABEL, UNIT_BY_ID } from "@/content/units";
+import { scoreAnswer } from "@/lib/game-engine";
 import { useGame } from "@/lib/game-context";
 import { playSound } from "@/lib/sound";
 import { useReducedMotion } from "@/lib/use-reduced-motion";
-import type { PixelIconName } from "../retro/PixelIcon";
 import { Window } from "../retro/Window";
-import { AnswerCard, type AnswerState } from "../ui/AnswerCard";
+import { LETTERS, QuestionView } from "./QuestionView";
 import { Button, ButtonLink } from "../ui/Button";
 import { ProgressIndicator, Tag, UnitTag } from "../ui/Data";
-import { FeedbackBlock, FeedbackMessage, type FeedbackVariant } from "../ui/FeedbackMessage";
 import { ScoreBadge } from "../ui/ScoreBadge";
-import { SourceList } from "../ui/SourceList";
-import { EmptyState, Notice } from "../ui/States";
+import { EmptyState } from "../ui/States";
 import { Timer } from "../ui/Timer";
 
-const LETTERS = ["A", "B", "C", "D", "E", "F"];
-const NON_LEGAL_SOURCES = new Set(["temario", "gnuGpl"]);
 
 function scrollWithinWindow(el: HTMLElement, behavior: ScrollBehavior) {
   const body = el.closest<HTMLElement>(".window__body");
   if (!body) return;
   const top = el.getBoundingClientRect().top - body.getBoundingClientRect().top + body.scrollTop - 12;
   body.scrollTo({ top: Math.max(0, top), behavior });
-}
-
-function cardState(question: Question, optionId: string, session: GameSession, answer?: AnswerRecord): AnswerState {
-  if (session.phase === "question") return session.selected === optionId ? "selected" : "idle";
-  const chosen = answer?.optionId === optionId;
-  if (question.kind === "opcion-multiple") {
-    if (question.options.find((o) => o.id === optionId)?.correct) return "correct";
-    return chosen ? "incorrect" : "dimmed";
-  }
-  const quality = question.options.find((o) => o.id === optionId)?.quality;
-  if (quality === "responsable") return "correct";
-  if (chosen) return quality === "parcial" ? "partial" : "incorrect";
-  return "dimmed";
-}
-
-function scenarioMark(
-  question: Question,
-  optionId: string,
-  state: AnswerState,
-): { text: string; icon: PixelIconName } | undefined {
-  if (question.kind !== "escenario" || state === "idle" || state === "selected") return undefined;
-  const q = question.options.find((o) => o.id === optionId)?.quality;
-  if (q === "responsable") return { text: "Responsable", icon: "check" };
-  if (q === "parcial") return { text: state === "dimmed" ? "A medias" : "Tu decisión: a medias", icon: "half" };
-  return { text: state === "dimmed" ? "Riesgosa" : "Tu decisión: riesgosa", icon: "close" };
 }
 
 /** Pantalla de juego: reto, opciones, temporizador, puntaje y retroalimentación. */
@@ -165,30 +134,6 @@ export function GamePlay() {
   const totalPoints = session.answers.reduce((s, a) => s + a.points, 0);
   const playerPoints = session.answers.filter((a) => a.player === item.player).reduce((s, a) => s + a.points, 0);
   const total = session.items.length;
-  const isLegal = question.sources.some((s) => !NON_LEGAL_SOURCES.has(s.sourceId));
-
-  const feedbackVariant: FeedbackVariant | null = answer
-    ? answer.outcome === "correcta"
-      ? "correct"
-      : answer.outcome === "parcial"
-        ? "partial"
-        : answer.outcome === "sin-respuesta"
-          ? "timeout"
-          : "incorrect"
-    : null;
-
-  const scenario = question.kind === "escenario";
-  const feedbackTitle: Record<FeedbackVariant, string> = {
-    correct: scenario ? "Decisión responsable" : "Correcto",
-    partial: "Decisión a medias",
-    incorrect: scenario ? "Decisión riesgosa" : "Incorrecto",
-    timeout: "Se acabó el tiempo",
-  };
-
-  const chosenScenario =
-    scenario && answer?.optionId ? question.options.find((o) => o.id === answer.optionId) : undefined;
-  const correctMc = question.kind === "opcion-multiple" ? question.options.find((o) => o.correct) : undefined;
-  const correctLetter = correctMc ? LETTERS[item.optionOrder.indexOf(correctMc.id)] : undefined;
 
   const exitDialog = exitOpen ? (
     <ExitDialog
@@ -242,152 +187,50 @@ export function GamePlay() {
         </div>
       ) : (
         <>
-          <div ref={topRef} tabIndex={-1} style={{ outline: "none", scrollMarginTop: 16 }}>
-            <div className="game-hud">
-              <div className="game-hud__meta">
-                <UnitTag unitId={question.unitId} />
-                <Tag>{KIND_LABEL[question.kind]}</Tag>
-                <Tag variant="dim">{DIFFICULTY_LABEL[question.difficulty]}</Tag>
-                {multi && <Tag variant="dim">Jugador {item.player}</Tag>}
-              </div>
-              <ProgressIndicator
-                current={session.index + 1}
-                total={total}
-                label="Reto"
-                done={session.phase === "feedback" ? session.index + 1 : session.index}
-              />
-              <div className="game-hud__stats">
-                <ScoreBadge label={multi ? `Puntos J${item.player}` : "Puntos"} value={multi ? playerPoints : totalPoints} />
-                {session.config.timerSeconds > 0 && (
-                  <Timer
-                    key={`${session.id}-${session.index}`}
-                    seconds={session.config.timerSeconds}
-                    running={session.phase === "question" && !exitOpen}
-                    onExpire={() => {
-                      playSound("incorrect");
-                      game.dispatch({ type: "timeout" });
-                    }}
-                  />
-                )}
-              </div>
-            </div>
-
-            <h1 className="challenge-title">{question.title}</h1>
-            <p className="challenge-topic">Tema: {question.topic}</p>
-            {question.context && (
-              <div className="challenge-context">
-                <span className="challenge-context__label">La situación</span>
-                {question.context}
-              </div>
-            )}
-            <p className="challenge-prompt">{question.prompt}</p>
-          </div>
-
-          <ul className={`answers${scenario ? " answers--stack" : ""}`} aria-label="Opciones de respuesta">
-            {item.optionOrder.map((optionId, i) => {
-              const opt = question.options.find((o) => o.id === optionId)!;
-              const state = cardState(question, optionId, session, answer);
-              return (
-                <li key={optionId}>
-                  <AnswerCard
-                    letter={LETTERS[i]}
-                    text={opt.text}
-                    state={state}
-                    disabled={session.phase !== "question"}
-                    mark={scenarioMark(question, optionId, state)}
-                    onSelect={() => {
-                      playSound("select");
-                      game.dispatch({ type: "select", optionId });
-                    }}
-                  />
-                </li>
-              );
-            })}
-          </ul>
-
-          {session.phase === "question" && (
-            <div className="game-actions">
-              <span className="game-actions__hint" role="status">
-                {session.selected === null
-                  ? "Elige una opción con el mouse, el dedo o las teclas 1 a 4."
-                  : "Puedes cambiar de opción antes de confirmar."}
-              </span>
-              <Button size="lg" onClick={confirm} disabled={session.selected === null} shortcut="Enter">
-                Confirmar respuesta
-              </Button>
-            </div>
-          )}
-
-          {session.phase === "feedback" && answer && feedbackVariant && (
-            <div
-              ref={feedbackRef}
-              tabIndex={-1}
-              style={{ outline: "none", marginTop: "var(--sp-6)", scrollMarginTop: 16 }}
-              aria-label={`${feedbackTitle[feedbackVariant]}. Retroalimentación del reto`}
-            >
-              <FeedbackMessage
-                variant={feedbackVariant}
-                title={feedbackTitle[feedbackVariant]}
-                points={answer.points === 1 ? "+1 punto" : `+${answer.points} puntos`}
-              >
-                {feedbackVariant === "timeout" && (
-                  <FeedbackBlock title="Qué pasó">
-                    No elegiste ninguna opción a tiempo y no sumas puntos. Lee el fundamento: es lo que más te ayudará
-                    a recordarlo.
-                  </FeedbackBlock>
-                )}
-
-                {question.kind === "opcion-multiple" && feedbackVariant !== "correct" && correctMc && (
-                  <FeedbackBlock title="La respuesta correcta">{`${correctLetter}. ${correctMc.text}`}</FeedbackBlock>
-                )}
-
-                {chosenScenario && (
-                  <FeedbackBlock title="Lo que pasaría">{chosenScenario.consequence}</FeedbackBlock>
-                )}
-
-                <FeedbackBlock title="Por qué">{question.explanation}</FeedbackBlock>
-
-                <FeedbackBlock title={isLegal ? "Fundamento legal" : "Fundamento ético"} variant="basis">
-                  {question.principle}
-                </FeedbackBlock>
-
-                {question.kind === "escenario" && (
-                  <FeedbackBlock
-                    title={feedbackVariant === "correct" ? "Por qué es la mejor decisión" : "Qué hacer en su lugar"}
-                  >
-                    {question.responsibleAlternative}
-                  </FeedbackBlock>
-                )}
-
-                {question.classification && question.classification.length > 0 && (
-                  <FeedbackBlock title="¿Falta ética, infracción o delito?">
-                    <ul className="source-list">
-                      {question.classification.map((c, i) => (
-                        <li key={i}>
-                          <strong>{CONDUCT_LABEL[c.type]}.</strong> {c.text}
-                        </li>
-                      ))}
-                    </ul>
-                  </FeedbackBlock>
-                )}
-
-                <details className="disclosure">
-                  <summary>Fuentes consultadas y vigencia</summary>
-                  <SourceList sources={question.sources} />
-                  {question.review.status === "requiere-revision" && (
-                    <div style={{ marginTop: "var(--sp-3)" }}>
-                      <Notice variant="review" icon="info">
-                        <p>Contenido en revisión por el equipo docente. {question.review.note}</p>
-                      </Notice>
-                    </div>
+          <QuestionView
+            question={question}
+            optionOrder={item.optionOrder}
+            phase={session.phase === "feedback" ? "feedback" : "question"}
+            selected={session.selected}
+            answer={answer}
+            topRef={topRef}
+            feedbackRef={feedbackRef}
+            onSelect={(optionId) => {
+              playSound("select");
+              game.dispatch({ type: "select", optionId });
+            }}
+            onConfirm={confirm}
+            header={
+              <div className="game-hud">
+                <div className="game-hud__meta">
+                  <UnitTag unitId={question.unitId} />
+                  <Tag>{KIND_LABEL[question.kind]}</Tag>
+                  <Tag variant="dim">{DIFFICULTY_LABEL[question.difficulty]}</Tag>
+                  {multi && <Tag variant="dim">Jugador {item.player}</Tag>}
+                </div>
+                <ProgressIndicator
+                  current={session.index + 1}
+                  total={total}
+                  label="Reto"
+                  done={session.phase === "feedback" ? session.index + 1 : session.index}
+                />
+                <div className="game-hud__stats">
+                  <ScoreBadge label={multi ? `Puntos J${item.player}` : "Puntos"} value={multi ? playerPoints : totalPoints} />
+                  {session.config.timerSeconds > 0 && (
+                    <Timer
+                      key={`${session.id}-${session.index}`}
+                      seconds={session.config.timerSeconds}
+                      running={session.phase === "question" && !exitOpen}
+                      onExpire={() => {
+                        playSound("incorrect");
+                        game.dispatch({ type: "timeout" });
+                      }}
+                    />
                   )}
-                </details>
-
-                <p className="text-dim text-small" style={{ margin: 0 }}>
-                  Material educativo: no es asesoría jurídica.
-                </p>
-              </FeedbackMessage>
-
+                </div>
+              </div>
+            }
+            feedbackFooter={
               <div className="game-actions">
                 <span className="game-actions__hint">
                   {multi && !isLast ? `Sigue el turno de Jugador ${session.items[session.index + 1].player}.` : ""}
@@ -396,8 +239,8 @@ export function GamePlay() {
                   {isLast ? "Ver resultados" : "Siguiente reto"}
                 </Button>
               </div>
-            </div>
-          )}
+            }
+          />
         </>
       )}
     </Window>

@@ -510,3 +510,17 @@
 .task-key {
   transition: background-color 100ms linear, color 100ms linear;
 }
+
+/* Modo aventura: el juego ocupa todo el cristal; se ocultan iconos y barra de tareas */
+.desktop[data-mode="game"] {
+  grid-template-rows: minmax(0, 1fr);
+}
+.desktop[data-mode="game"] .desktop__nav,
+.desktop[data-mode="game"] .taskbar,
+.desktop[data-mode="game"] .start-menu {
+  display: none;
+}
+.desktop[data-mode="game"] .desktop__main {
+  grid-template-columns: minmax(0, 1fr);
+  padding: 0;
+}

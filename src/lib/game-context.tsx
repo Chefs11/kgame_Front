@@ -27,6 +27,8 @@ interface GameContextValue {
   /** Cierra la partida y devuelve el resultado (o null si no hubo respuestas). */
   finish: () => GameResult | null;
   abandon: () => void;
+  /** Registra un resultado terminado en otro modo (Modo aventura) como último resultado y en el progreso. */
+  recordResult: (result: GameResult) => void;
 }
 
 const GameContext = createContext<GameContextValue | null>(null);
@@ -66,9 +68,15 @@ export function GameProvider({ children }: { children: ReactNode }) {
 
   const abandon = useCallback(() => setSession(null), []);
 
+  const recordResult = useCallback((result: GameResult) => {
+    setLastResult(result);
+    setLastConfig(result.config);
+    if (settingsStore.get().saveProgress) saveGameResult(result);
+  }, []);
+
   const value = useMemo(
-    () => ({ session, lastResult, lastConfig, start, dispatch, finish, abandon }),
-    [session, lastResult, lastConfig, start, dispatch, finish, abandon],
+    () => ({ session, lastResult, lastConfig, start, dispatch, finish, abandon, recordResult }),
+    [session, lastResult, lastConfig, start, dispatch, finish, abandon, recordResult],
   );
 
   return <GameContext.Provider value={value}>{children}</GameContext.Provider>;

@@ -14,6 +14,8 @@ export interface Settings {
   motion: MotionPreference;
   /** Guardar resultados de partidas en este dispositivo. */
   saveProgress: boolean;
+  /** Volumen general del audio (0–1). */
+  volume: number;
 }
 
 export const DEFAULT_SETTINGS: Settings = {
@@ -22,6 +24,7 @@ export const DEFAULT_SETTINGS: Settings = {
   simple: false,
   motion: "system",
   saveProgress: true,
+  volume: 0.7,
 };
 
 export const settingsStore = createLocalStore<Settings>({
@@ -36,6 +39,7 @@ export const settingsStore = createLocalStore<Settings>({
       simple: r.simple === true || (r as { presentation?: boolean }).presentation === true,
       motion: r.motion === "reduce" ? "reduce" : "system",
       saveProgress: r.saveProgress !== false,
+      volume: typeof r.volume === "number" && r.volume >= 0 && r.volume <= 1 ? r.volume : DEFAULT_SETTINGS.volume,
     };
   },
 });
