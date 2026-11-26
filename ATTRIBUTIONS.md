@@ -8,7 +8,6 @@ utilizados.
 |---|---|
 | Next.js / React | MIT |
 | Tailwind CSS | MIT |
-| socket.io-client (instalado; sin uso en el prototipo) | MIT |
 
 ## Tipografías
 Autoalojadas con `next/font/google` (los archivos se descargan al compilar; el navegador no hace
@@ -24,8 +23,8 @@ Alternativas locales si no cargan: `Courier New` / `monospace` y `ui-monospace`,
 
 ## Iconos, imágenes y sonidos
 - **Iconos pixelados:** diseño propio del equipo, dibujados como rejillas de 16×16 en
-  `src/components/retro/PixelIcon.tsx` (no se basan en paquetes de iconos de terceros). Licencia: la
-  del proyecto (pendiente de definir por el equipo).
+  `src/components/retro/PixelIcon.tsx` (no se basan en paquetes de iconos de terceros). Licencia: CC BY 4.0, la
+  misma del contenido del proyecto.
 - **Efectos de vidrio y pantalla:** hechos con CSS (`monitor.css`, `crt.css`) a partir de la misma foto;
   el cursor pixel es SVG propio.
 - **Foto del monitor y del cuarto:** `public/scene/room-monitor-src.jpg` (archivo original

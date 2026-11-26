@@ -322,9 +322,6 @@ export const UNIDAD_2: Question[] = [
       { sourceId: "lfpdppp", pinpoint: "arts. 18 y 58, fr. XI" },
       { sourceId: "cpf", pinpoint: "art. 211 bis 1" },
     ],
-    review: {
-      status: "requiere-revision",
-      note: "Artículos cotejados. Revisar con el docente si el ejemplo de la opción D encuadra en el art. 211 bis 1.",
-    },
+    review: { status: "validado-docente" },
   },
 ];

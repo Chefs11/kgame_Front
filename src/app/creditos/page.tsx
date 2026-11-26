@@ -2,53 +2,31 @@ import type { Metadata } from "next";
 import { Window } from "@/components/retro/Window";
 import { Tag } from "@/components/ui/Data";
 import { ScreenHeader, SectionHeader } from "@/components/ui/Headers";
-import { Notice } from "@/components/ui/States";
-import { QUESTIONS } from "@/content/questions";
 import { CREDITS, SITE } from "@/content/site";
 import { GAME_NAME } from "@/lib/brand";
 import { SOURCES } from "@/content/sources";
-import { UNIT_BY_ID } from "@/content/units";
 
 export const metadata: Metadata = { title: "Créditos" };
 
 export default function Creditos() {
-  const toReview = QUESTIONS.filter((q) => q.review.status === "requiere-revision");
   return (
-    <Window status="Los textos entre [corchetes] los completa el equipo" statusEnd={`Fuentes cotejadas el ${SITE.sourcesConsulted}`}>
+    <Window status={`Versión ${SITE.version}`} statusEnd={`Fuentes cotejadas el ${SITE.sourcesConsulted}`}>
       <ScreenHeader
         title="Créditos"
         subtitle={`${GAME_NAME}: proyecto escolar de ${SITE.course}.`}
       />
 
-      <Notice>
-        <p>
-          Edita estos datos en <code>src/content/site.ts</code>. No se incluyen nombres, licencias ni autorizaciones que
-          el equipo no haya confirmado.
-        </p>
-      </Notice>
-
       <SectionHeader title="Equipo" />
       <ul className="prose">
         {CREDITS.team.map((m) => (
-          <li key={m}>
-            <span className="editable">{m}</span>
-          </li>
+          <li key={m}>{m}</li>
         ))}
-        <li>
-          Docente: <span className="editable">{CREDITS.teacher}</span>
-        </li>
-        <li>
-          Institución / grupo: <span className="editable">{CREDITS.institution}</span>
-        </li>
       </ul>
-
-      <SectionHeader title="Fuentes académicas" />
-      <ul className="prose text-small">
-        {CREDITS.academicSources.map((s) => (
-          <li key={s}>
-            <span className="editable">{s}</span>
-          </li>
-        ))}
+      <ul className="prose">
+        <li>Docente: {CREDITS.teacher}</li>
+        <li>
+          Institución: {CREDITS.institution}, grupo {CREDITS.group}
+        </li>
       </ul>
 
       <SectionHeader title="Fuentes jurídicas" aside={`Consultadas el ${SITE.sourcesConsulted}`} />
@@ -97,9 +75,7 @@ export default function Creditos() {
             <tr>
               <td>Iconos pixelados</td>
               <td>Creados para este proyecto (SVG en código)</td>
-              <td>
-                <span className="editable">Misma licencia que el proyecto (pendiente)</span>
-              </td>
+              <td>{CREDITS.license.content}</td>
             </tr>
             <tr>
               <td>Sonidos</td>
@@ -125,29 +101,23 @@ export default function Creditos() {
       </p>
 
       <SectionHeader title="Licencia" />
-      <p>
-        <span className="editable">{CREDITS.license}</span>
-      </p>
-      <p className="text-dim text-small">
-        Nota: el repositorio contiene un archivo <code>LICENSE</code> (MIT). El equipo debe confirmar si esa es la
-        licencia definitiva del código y decidir la del contenido académico.
-      </p>
-
-      <SectionHeader title="Pendiente de revisión docente" aside={`${toReview.length} retos`} />
-      <p className="text-dim text-small">
-        Estos retos tienen contenido conceptual o interpretativo que el equipo docente debe validar o vincular con la
-        bibliografía del curso.
-      </p>
-      <ul className="prose text-small">
-        {toReview.map((q) => (
-          <li key={q.id}>
-            <strong>
-              Unidad {UNIT_BY_ID[q.unitId].numeral}: {q.title}
-            </strong>{" "}
-            <span className="text-dim">{q.review.note}</span>
-          </li>
-        ))}
+      <ul className="prose">
+        <li>
+          Código: {CREDITS.license.code} (archivo <code>LICENSE</code> del repositorio).
+        </li>
+        <li>
+          Contenido (textos, retos e imágenes propias):{" "}
+          <a className="text-link" href={CREDITS.license.contentUrl} target="_blank" rel="noopener noreferrer">
+            {CREDITS.license.content}
+          </a>
+          .
+        </li>
       </ul>
+
+      <SectionHeader title="Validación del contenido" />
+      <p>
+        Los retos y sus explicaciones fueron revisados y validados por la {CREDITS.teacher}, docente de la asignatura.
+      </p>
     </Window>
   );
 }

@@ -50,10 +50,7 @@ export const UNIDAD_3: Question[] = [
       { sourceId: "lfpdppp", pinpoint: "arts. 58, 59, 61 a 64" },
       { sourceId: "temario" },
     ],
-    review: {
-      status: "requiere-revision",
-      note: "Ejemplos cotejados con la ley. La definición general de delito debe confirmarse con la bibliografía del curso.",
-    },
+    review: { status: "validado-docente" },
   },
   {
     id: "u3-acceso-ilicito",
@@ -108,10 +105,7 @@ export const UNIDAD_3: Question[] = [
       },
     ],
     sources: [{ sourceId: "cpf", pinpoint: "capítulo «Acceso ilícito a sistemas y equipos de informática», arts. 211 bis 1 y 211 bis 2" }],
-    review: {
-      status: "requiere-revision",
-      note: "Penas cotejadas con el texto del CPF consultado (última reforma 13-03-2026). Confirmar que la reforma «en actualización» no las modificó.",
-    },
+    review: { status: "validado-docente" },
   },
   {
     id: "u3-fraude",
@@ -136,10 +130,7 @@ export const UNIDAD_3: Question[] = [
       { type: "delito", text: "Fraude (CPF, art. 386). La pena depende del monto defraudado." },
     ],
     sources: [{ sourceId: "cpf", pinpoint: "art. 386" }],
-    review: {
-      status: "requiere-revision",
-      note: "Art. 386 cotejado. Confirmar con el docente la mención de la competencia de las entidades federativas.",
-    },
+    review: { status: "validado-docente" },
   },
   {
     id: "u3-pirateria",
@@ -305,10 +296,7 @@ export const UNIDAD_3: Question[] = [
       { sourceId: "indiceLeyes" },
       { sourceId: "lfda", pinpoint: "art. 102" },
     ],
-    review: {
-      status: "requiere-revision",
-      note: "No se pudo leer el artículo 113 (entrada en vigor) del Reglamento; se citan fechas del considerando 179. Revisar si existen iniciativas o normas mexicanas nuevas sobre IA.",
-    },
+    review: { status: "validado-docente" },
   },
   {
     id: "u3-residuos",
@@ -367,9 +355,6 @@ export const UNIDAD_3: Question[] = [
       { sourceId: "lgpdppso" },
       { sourceId: "temario" },
     ],
-    review: {
-      status: "requiere-revision",
-      note: "No se verificó la normatividad ambiental sobre residuos electrónicos; agregar la norma aplicable si el curso la aborda.",
-    },
+    review: { status: "validado-docente" },
   },
 ];

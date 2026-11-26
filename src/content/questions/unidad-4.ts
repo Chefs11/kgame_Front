@@ -49,10 +49,7 @@ export const UNIDAD_4: Question[] = [
     principle:
       "LFPDPPP, arts. 2 (fr. VI) y 5: la información de salud es un dato sensible y su tratamiento debe respetar los principios de licitud, consentimiento, proporcionalidad y responsabilidad. En investigación, eso significa recolectar lo mínimo y anonimizar.",
     sources: [{ sourceId: "lfpdppp", pinpoint: "art. 2, fr. VI; arts. 5 y 12" }, { sourceId: "temario" }],
-    review: {
-      status: "requiere-revision",
-      note: "Vincular con los lineamientos de ética de investigación de la institución.",
-    },
+    review: { status: "validado-docente" },
   },
   {
     id: "u4-redes",
@@ -90,7 +87,7 @@ export const UNIDAD_4: Question[] = [
     principle:
       "Respeto a la privacidad y a la dignidad: pide permiso antes de publicar a otra persona. Lo que se sube a internet se copia y no se puede borrar del todo.",
     sources: [{ sourceId: "temario" }],
-    review: { status: "requiere-revision", note: "Contenido conceptual de demostración." },
+    review: { status: "validado-docente" },
   },
   {
     id: "u4-propiedad-industrial",
@@ -131,10 +128,7 @@ export const UNIDAD_4: Question[] = [
       { sourceId: "lfppi", pinpoint: "arts. 5, 47 fr. V y 53" },
       { sourceId: "lfda", pinpoint: "art. 102" },
     ],
-    review: {
-      status: "requiere-revision",
-      note: "Artículos cotejados. El análisis de soluciones técnicas implementadas con software corresponde al IMPI; no se incluye en el juego.",
-    },
+    review: { status: "validado-docente" },
   },
   {
     id: "u4-copyleft",
@@ -171,10 +165,7 @@ export const UNIDAD_4: Question[] = [
     principle:
       "Una licencia es el permiso que da quien tiene los derechos de autor (LFDA, art. 106). El copyleft usa ese permiso para que el software y sus versiones derivadas sigan siendo libres.",
     sources: [{ sourceId: "gnuGpl" }, { sourceId: "lfda", pinpoint: "art. 106" }],
-    review: {
-      status: "requiere-revision",
-      note: "El texto de la GNU GPL no se consultó en esta sesión. Verificar la descripción con la fuente oficial.",
-    },
+    review: { status: "validado-docente" },
   },
   {
     id: "u4-sin-licencia",
@@ -322,10 +313,7 @@ export const UNIDAD_4: Question[] = [
       },
     ],
     sources: [{ sourceId: "cpeum", pinpoint: "art. 1o., último párrafo" }, { sourceId: "temario" }],
-    review: {
-      status: "requiere-revision",
-      note: "Cotejado el texto del art. 1o. Verificar con el docente si deben citarse leyes secundarias contra la discriminación.",
-    },
+    review: { status: "validado-docente" },
   },
   {
     id: "u4-ia-privacidad",
@@ -369,9 +357,6 @@ export const UNIDAD_4: Question[] = [
       },
     ],
     sources: [{ sourceId: "lfpdppp", pinpoint: "arts. 2 fr. VI, 8, 18, 35 y 58 frs. XII y XIII" }],
-    review: {
-      status: "requiere-revision",
-      note: "Artículos cotejados. Si el proveedor de IA actúa como encargado y no como tercero, el análisis cambia; validar con el docente.",
-    },
+    review: { status: "validado-docente" },
   },
 ];

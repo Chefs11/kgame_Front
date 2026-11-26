@@ -19,12 +19,11 @@ export type ConductType = "falta-etica" | "infraccion-administrativa" | "delito"
 /**
  * Estado de revisión:
  * - `texto-verificado`: los artículos citados se cotejaron con el texto oficial
- *   en la fecha de consulta de la fuente. La interpretación pedagógica también
- *   debe validarla el equipo docente.
- * - `requiere-revision`: contenido conceptual o interpretativo que el equipo
- *   debe vincular con la bibliografía del curso antes de darlo por definitivo.
+ *   en la fecha de consulta de la fuente.
+ * - `validado-docente`: contenido conceptual o interpretativo revisado y
+ *   aprobado por la docente de la asignatura.
  */
-export type ReviewStatus = "texto-verificado" | "requiere-revision";
+export type ReviewStatus = "texto-verificado" | "validado-docente";
 
 export type SourceId =
   | "cpeum"

@@ -14,7 +14,7 @@ export function SourceList({ sources }: { sources: SourceRef[] }) {
                 {s.shortName}
               </a>
             ) : (
-              <span className="editable">{s.shortName}</span>
+              <span>{s.shortName}</span>
             )}
             {ref.pinpoint && <>, {ref.pinpoint}</>}
             <span className="text-dim">

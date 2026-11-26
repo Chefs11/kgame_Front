@@ -37,10 +37,7 @@ export const UNIDAD_1: Question[] = [
     principle:
       "Para justificar una decisión profesional no basta con «siempre se ha hecho así»: hay que explicar qué valor protege y qué principio la respalda. Esa es la tarea de la ética.",
     sources: [{ sourceId: "temario" }],
-    review: {
-      status: "requiere-revision",
-      note: "Definición conceptual de demostración. Vincular con la bibliografía de la Unidad I.",
-    },
+    review: { status: "validado-docente" },
   },
   {
     id: "u1-dilema",
@@ -77,10 +74,7 @@ export const UNIDAD_1: Question[] = [
     principle:
       "Ante un dilema, identifica los valores en conflicto, a quién afecta cada opción y qué alternativas existen. Elige la que cause menos daño y que puedas defender en público.",
     sources: [{ sourceId: "temario" }],
-    review: {
-      status: "requiere-revision",
-      note: "Contenido conceptual. Confirmar con el modelo de toma de decisiones del curso.",
-    },
+    review: { status: "validado-docente" },
   },
   {
     id: "u1-ciberacoso",
@@ -139,10 +133,7 @@ export const UNIDAD_1: Question[] = [
       },
     ],
     sources: [{ sourceId: "cpf", pinpoint: "art. 199 Octies" }, { sourceId: "temario" }],
-    review: {
-      status: "requiere-revision",
-      note: "La cita del CPF se cotejó con el texto oficial. La guía de actuación debe alinearse con el protocolo de la institución.",
-    },
+    review: { status: "validado-docente" },
   },
   {
     id: "u1-desarrollo-seguro",
@@ -242,10 +233,7 @@ export const UNIDAD_1: Question[] = [
     principle:
       "Una política interna no sustituye a la ley: debe cumplirla. Por ejemplo, la LFPDPPP exige informar en el aviso de privacidad qué datos se tratan y para qué (arts. 14 a 16); una política de uso de equipos no puede contradecir ese aviso.",
     sources: [{ sourceId: "lfpdppp", pinpoint: "arts. 14 a 16 (aviso de privacidad)" }, { sourceId: "temario" }],
-    review: {
-      status: "requiere-revision",
-      note: "Concepto de política de uso aceptable: vincular con la bibliografía del curso.",
-    },
+    review: { status: "validado-docente" },
   },
   {
     id: "u1-desinformacion",
@@ -283,7 +271,7 @@ export const UNIDAD_1: Question[] = [
     principle:
       "Quien comparte también responde por el alcance que le da a un contenido. Verificar la fuente original antes de difundir es un deber básico de la ciudadanía digital.",
     sources: [{ sourceId: "temario" }],
-    review: { status: "requiere-revision", note: "Contenido conceptual de demostración." },
+    review: { status: "validado-docente" },
   },
   {
     id: "u1-acceso-equitativo",
@@ -321,9 +309,6 @@ export const UNIDAD_1: Question[] = [
     principle:
       "El art. 1o. de la Constitución prohíbe toda discriminación motivada, entre otras causas, por discapacidad o condición social. Diseñar un servicio esencial que deje fuera a esas personas contradice ese principio.",
     sources: [{ sourceId: "cpeum", pinpoint: "art. 1o. (prohibición de discriminación)" }, { sourceId: "temario" }],
-    review: {
-      status: "requiere-revision",
-      note: "Relación con el art. 1o. constitucional es orientativa; confirmar enfoque con el docente.",
-    },
+    review: { status: "validado-docente" },
   },
 ];

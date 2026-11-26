@@ -29,8 +29,7 @@ npm run dev        # http://localhost:3001
 | `npm run e2e` | Pruebas e2e (Playwright) |
 | `npm run assets:adventure` | Regenera el arte del Modo aventura |
 
-No necesita variables de entorno. `.env.example` y `src/lib/socket.ts` son del arranque original del
-proyecto y **no se usan** en esta versión.
+No necesita variables de entorno.
 
 ## Organización
 
@@ -209,9 +208,8 @@ Contraste comprobado sobre `screen`: `phosphor` 11.3:1, `phosphor-dim` 6.7:1, `a
 - El **Código Penal Federal** aparecía «en actualización» (reforma DOF 13-11-2026); el texto
   consultado era el de la reforma del 13-03-2026. Confirmar que los arts. 199 Septies, 199 Octies,
   211 bis 1, 211 bis 2, 386 y 424 bis no cambiaron.
-- Los retos marcados con `review.status: "requiere-revision"` (se listan en la pantalla
-  **Créditos**) tienen contenido conceptual o interpretativo que debe vincularse con la bibliografía
-  del curso.
+- Los retos con contenido conceptual o interpretativo (`review.status: "validado-docente"`) fueron
+  revisados y aprobados por la docente de la asignatura.
 - No se pudo verificar: la adhesión de México al Convenio de Budapest (no se incluye en el juego), el
   artículo 113 del Reglamento (UE) 2024/1689 (se citan fechas de su considerando 179) y el texto de la
   GNU GPL.
@@ -222,7 +220,7 @@ Contraste comprobado sobre `screen`: `phosphor` 11.3:1, `phosphor-dim` 6.7:1, `a
 ## Pendientes para el backend (no implementado)
 
 - Banco de preguntas servido por API con el mismo formato de `src/content/types.ts`.
-- Partidas multijugador en tiempo real (por ejemplo con Socket.IO, como prevé `src/lib/socket.ts`):
+- Partidas multijugador en tiempo real (por ejemplo con Socket.IO):
   salas, códigos de acceso, sincronización de turnos y temporizador del lado del servidor.
 - Cuentas o apodos, si se deciden; en ese caso, aviso de privacidad conforme a la LFPDPPP
   (art. 15) **antes** de recabar datos, y mecanismo para derechos ARCO.
@@ -232,5 +230,7 @@ Contraste comprobado sobre `screen`: `phosphor` 11.3:1, `phosphor-dim` 6.7:1, `a
 
 ## Licencia y atribuciones
 
-Licencia del proyecto: **pendiente de definir por el equipo** (el repositorio incluye un `LICENSE`
-MIT que el equipo debe confirmar). Recursos de terceros en `ATTRIBUTIONS.md`.
+- Código: licencia MIT (`LICENSE`).
+- Contenido (textos, retos e imágenes propias): CC BY 4.0.
+
+Recursos de terceros en `ATTRIBUTIONS.md`.

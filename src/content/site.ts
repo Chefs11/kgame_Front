@@ -1,7 +1,5 @@
 /**
- * Datos generales del proyecto. Edita aquí el nombre del juego y los
- * marcadores pendientes. Los textos entre corchetes son marcadores que el
- * equipo debe reemplazar.
+ * Datos generales del proyecto y de la pantalla de créditos.
  */
 import { GAME_NAME } from "@/lib/brand";
 
@@ -15,18 +13,17 @@ export const SITE = {
   tagline: "Resuelve casos de ética y legislación en las TIC y aprende qué dice la ley mexicana.",
   /** Fecha en que se cotejaron las fuentes jurídicas incluidas. */
   sourcesConsulted: "2026-11-23",
-  version: "0.1 (prototipo de demostración)",
+  version: "1.0",
 } as const;
 
-/** Marcadores editables de la pantalla de créditos. No inventar datos. */
 export const CREDITS = {
-  team: ["[Integrante 1]", "[Integrante 2]", "[Integrante 3]"],
-  teacher: "[Docente de la asignatura]",
-  institution: "[Institución / grupo]",
-  academicSources: [
-    "[Bibliografía del temario: agregar referencias consultadas por el equipo]",
-  ],
-  license:
-    "[Licencia del código y del contenido: pendiente de definir por el equipo]",
-  privacyContact: "[Responsable y medio de contacto, si en el futuro se recopilan datos]",
+  team: ["Alan Salgado Arias", "Ernesto Figueroa Domínguez", "Bigvai Villanueva", "José Manuel Sánchez"],
+  teacher: "Mtra. Iris Nayeli Corona",
+  institution: "Universidad Tecnológica Emiliano Zapata",
+  group: "7E",
+  license: {
+    code: "Licencia MIT",
+    content: "Creative Commons Atribución 4.0 Internacional (CC BY 4.0)",
+    contentUrl: "https://creativecommons.org/licenses/by/4.0/deed.es",
+  },
 } as const;

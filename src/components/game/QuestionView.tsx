@@ -9,7 +9,6 @@ import { AnswerCard, type AnswerState } from "../ui/AnswerCard";
 import { Button } from "../ui/Button";
 import { FeedbackBlock, FeedbackMessage, type FeedbackVariant } from "../ui/FeedbackMessage";
 import { SourceList } from "../ui/SourceList";
-import { Notice } from "../ui/States";
 
 /**
  * Vista de un reto: enunciado, opciones, confirmación y retroalimentación con
@@ -206,13 +205,6 @@ export function QuestionView({
             <details className="disclosure">
               <summary>Fuentes consultadas y vigencia</summary>
               <SourceList sources={question.sources} />
-              {question.review.status === "requiere-revision" && (
-                <div style={{ marginTop: "var(--sp-3)" }}>
-                  <Notice variant="review" icon="info">
-                    <p>Contenido en revisión por el equipo docente. {question.review.note}</p>
-                  </Notice>
-                </div>
-              )}
             </details>
 
             <p className="text-dim text-small" style={{ margin: 0 }}>
